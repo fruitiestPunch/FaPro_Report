@@ -95,7 +95,7 @@ In Projekt 1 ging es darum, eine algorithmische Idee auf Basis von \cite{foerste
 Der Kerngedanke hier war es, einen einen schnellen Algorithmus zu finden, 
 welcher hinreichend gute Ergebnisse in Bezug auf die MLU abliefert.
 Diese Eigenschaft ist insbesondere f\"ur Netzwerke sinvoll,
-dessen Auslastungen sich regelm\"a\ss ig w\"ahrend des Betriebs \"andern und der ALgorithmus reaktiv sehr schnell alle Gewichte und Wegpunkte neu berechnet.
+dessen Auslastungen sich regelm\"a\ss ig w\"ahrend des Betriebs \"andern und der ALgorithmus reaktiv sehr schnell alle Gewichte und Wegpunkte neu berechnet.\newline
 Die Grundlage dieses Algorithmus war die sequentielle Kombination von dem empirisch h\"aufig verwendetem $inverse\_capacity$ und dem etwas langsameren aber genaueren $demand\_first\_waypoints$.
 \emph{Anmerkung: Die Algorithemn Namen "demand first waypoints" und "greedy waypoints" sind hier austauschbar.}\newline
 Daraufhin bildeten sich zwei Fragen.
@@ -117,12 +117,43 @@ Daraufhin bildeten sich zwei Fragen.
 \caption{Vergleich von vier Algorithmen mit syntetischen Anforderungen auf der Abilene-Topologie. Legende: greedy waypoints in blau, inverse capacity in gelb, SeqComWayCap in gr\"un, SeqComCapWay in rot.}
 \label{fig:pouriaScatterSynthetic}
 \end{figure}
-Die Abbildungen \ref{fig:pouriaBoxplotSynthetic} und \ref{fig:pouriaBoxplotReal} zeigen, 
+% Das [h] kann weg, dann findet Tabelle automatisch den besten Platz
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{figures/pouria_real_demands.pdf}
+\caption{Vergleich von vier Algorithmen mit realen Anforderungen auf der Abilene-Topologie. Legende: greedy waypoints in blau, inverse capacity in gelb, SeqComWayCap in gr\"un, SeqComCapWay in rot.}
+\label{fig:pouriaBoxplotReal}
+\end{figure}
+% Das [h] kann weg, dann findet Tabelle automatisch den besten Platz
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{figures/pouria_colored_scatter_plot_results_real_demands.pdf}
+\caption{Vergleich von vier Algorithmen mit syntetischen Anforderungen auf der Abilene-Topologie. Legende: greedy waypoints in blau, inverse capacity in gelb, SeqComWayCap in gr\"un, SeqComCapWay in rot.}
+\label{fig:pouriaScatterReal}
+\end{figure}
+Die Abbildungen \ref{fig:pouriaBoxplotSynthetic} und \ref{fig:pouriaBoxplotReal} geben eine Antwort auf Frage 1.
+Sie zeigen, 
 dass die sequentielle Kombination beider Algorithmen in beiden F\"allen mindestens genauso gut ist wie eines seiner Bestandteile. 
 Im Fall von $SeqComCapWay$ ist dieser im Durchschnitt sogar besser als beide Algorithmen.
 Dies l\"asst sich darauf zur\"uckf\"uhren, 
 dass die Kantengewichte durch den Algorithmus $inverse\_capacity$ zu Beginn verbessert werden 
 und anschlie\ss end durch den zweiten Algorithmus weiter verbessert werden, falls m\"oglich.
+Im Folgenden wird daher nur noch auf die sequentielle Kombination \emph{SeqComCapWay} (in rot) eingegangen.\newline
+Die Abbildungen \ref{fig:pouriaScatterSynthetic} und \ref{fig:pouriaScatterReal} hingegen sind relevant f\"ur die Frage 2. 
+Diese zeigen einen etwas genaueren Blick auf die Rechenergebnisse geplottet \"uber die daf\"ur ben\"otigte Zeit.
+Hier kann auch direkt gesehen werden, dass $inverse\_capacity$ mit Abstand der schnellste hier verwendete Algorigthmus ist.
+Dies ist besonders vorteilhaft, da es bedeutet, 
+dass die sequentielle Kombination aus $inverse\_capacity$ und $greedy\_waypoints$ kaum l\"anger mehr Berechnungszeit ben\"otigt als $greedy\_waypoints$ alleine.
+Somit konnte empirisch gezeigt werden, 
+dass in diesem "vereinfachten" Beispiel die Kombination der oben genannten Algorithmen nicht nur im Durchschnitt bessere MLU-Ergebnisse liefert, 
+sondern das auch in derselben Zeit erledigt.
+Und somit l\"asst sich die Frage der Rechtfertigung auslagern.
+In allen F\"allen, in denen der $greedy\_waypoints$-Algorithmus gerechtfertigt ist,
+ist auch die oben genannte Kombination gerechtfertigt.\newline
+Da es aus Zeitgr\"unden sowie mangelnder Rechenressourcen nicht so einfach m\"oglich war,
+diese Algorithmen auf sehr gro\ss en Tologien zu testen,
+kann nicht mit Sicherheit gesagt, wie hoch die Berechnungszeit in Topologien mit 50 oder mehr Knoten wirklich ist.
+Daher ist es schwer, diese Algorithmen (mit Ausnahme von $inverse\_capacity$ in solchen Topologien dynamisch zu verwenden.
 \subsection{Experimente zu Projekt 2}
 In diesem Projekt ging es darum, die eigene algorithmische Idee zu nehmen und in einem virtuellen Netzwerk\footnote{\url{https://github.com/nikolaussuess/nanonet}, siehe Abschnitt \ref{sec:resouces}} zu testen. 
 Dieses Projekt wurde ebenfalls mithilfe eines bereits existierenden Repositories\footnote{\url{https://github.com/fruitiestPunch/FaPro_P2}, siehe Abschnitt \ref{sec:resouces}} bearbeitet.
@@ -243,22 +274,6 @@ Vielen Dank an Marvin f\"ur seine Hilfe und Geduld mit unseren Problemen. Ohne s
 \bibliography{fapro_bib}
 
 \appendix
-\pagebreak
-\section{Zus\"atzliche Abbildungen}
-% Das [h] kann weg, dann findet Tabelle automatisch den besten Platz
-\begin{figure}
-\centering
-\includegraphics[width=\linewidth]{figures/pouria_real_demands.pdf}
-\caption{Vergleich von vier Algorithmen mit realen Anforderungen auf der Abilene-Topologie. Legende: greedy waypoints in blau, inverse capacity in gelb, SeqComWayCap in gr\"un, SeqComCapWay in rot.}
-\label{fig:pouriaBoxplotReal}
-\end{figure}
-% Das [h] kann weg, dann findet Tabelle automatisch den besten Platz
-\begin{figure}
-\centering
-\includegraphics[width=\linewidth]{figures/pouria_colored_scatter_plot_results_real_demands.pdf}
-\caption{Vergleich von vier Algorithmen mit syntetischen Anforderungen auf der Abilene-Topologie. Legende: greedy waypoints in blau, inverse capacity in gelb, SeqComWayCap in gr\"un, SeqComCapWay in rot.}
-\label{fig:pouriaScatterReal}
-\end{figure}
 \section{Onlineressourcen}
 \label{sec:resouces}
 Im Rahmen dieses Fachprojekts wurden drei \"offentliche Repositories als Hauptquellen verwendet. Die ersten beiden Repositories \url{https://github.com/fruitiestPunch/FaPro_P1} und \url{https://github.com/fruitiestPunch/FaPro_P2}, welche \emph{forks} von \url{https://github.com/tfenz/TE_SR_WAN_simulation} und \url{https://github.com/nikolaussuess/TE_SR_experiments_2021} sind. Die dritte Hauptquelle stellt \url{https://github.com/nikolaussuess/nanonet} dar, welche zur Erstellung von vom Projekt les- und interpretierbaren Netzwerktopologiedaten verwendet wurde.
