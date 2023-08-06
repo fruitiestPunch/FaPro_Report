@@ -52,12 +52,15 @@
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{abstract}
-In der heutigen Zeit werden mehrere Millionen Datenpakete von und zu Knotenpunkten verschickt.
-Daher ist das \emph{Routing} von diesen Datenpaketen in der heutigen Zeit wichtiger denn je.
-Gutes Routing kann Datenstaus verringern oder sogar verhindern, Verteilerknoten auslasten oder entlasten 
-und sorgt damit fuer einen reibungslosen Datenverkehr ueberall auf der Welt.
-Wie gut das Routing innerhalb einer Netzwerktopologie ist, wird durch den darunterliegenden Routingalgorithmus bestimmt.
-Hierf\"ur gibt es verschiedenste Ans\"atze mit variierender Komplexit\"at und Erfolgswahrscheinlichkeit.
+In diesem Report werden die Ergebnisse unserer Arbeit im Rahmen des Fachprojekts "Routingalgorithmen" zusammengefasst.
+Wir haben die Algorithmen auf die Maximum Link Utilization (MLU) nach \cite{foerster2021} untersucht.
+\textcolor{red}{Beschreibung der Ergebnisse von Pourias Algorithmus}
+Der Algorithmus, der inverse capacity mit centrality Metriken verrechnet, ist meistens schlechter als inverse capacity, 
+da reines inverse capacity öfter zwei kürzste Wege finden um demands gleichmäßiger zu verteilen damit einzelne Links nicht überlastet werden.
+Es wird jedoch auch gezeigt, dass Topologien gefunden werden können, bei den pures inverse capacity eine schlechtere MLU hat.
+\textcolor{red}{Beschreibung der Ergebnisse von Naveeds Algorithmus}
+Die Replikation andere Gruppen im ersten Projektteil nicht erfolgreich, und im zweiten schon, 
+jedoch haben wir daraus die Lehre gezogen wie wir unsere Arbeit besser replizierbar machen und das frühe Kommunikation mit den anderen Gruppen wichtig ist.
 \end{abstract}
 
 \begin{CCSXML}
@@ -82,7 +85,17 @@ Hierf\"ur gibt es verschiedenste Ans\"atze mit variierender Komplexit\"at und Er
 \maketitle
 
 \section{Einleitung}
-\textcolor{red}{fehlt}
+In der heutigen Zeit werden mehrere Millionen Datenpakete von und zu Knotenpunkten verschickt.
+Daher ist das \emph{Routing} von diesen Datenpaketen in der heutigen Zeit wichtiger denn je.
+Gutes Routing kann Datenstaus verringern oder sogar verhindern, Verteilerknoten auslasten oder entlasten 
+und sorgt damit fuer einen reibungslosen Datenverkehr ueberall auf der Welt.
+Wie gut das Routing innerhalb einer Netzwerktopologie ist, wird durch den darunterliegenden Routingalgorithmus bestimmt.
+Hierf\"ur gibt es verschiedenste Ans\"atze mit variierender Komplexit\"at und Erfolgswahrscheinlichkeit.
+
+Deswegen haben wir uns im Rahmen des Fachprojekts "Routingalgorithmen" näher mit den verschiedenen Algorithmen beschäftigt und haben eigene Variationen dieser Algorithmen erstellt um ein tieferes Verständnis der Materie zu erlangen.
+In diesem Report fassen wir die Ergebnisse unserer Arbeit zusammen.
+Dies umfasst eine Beschreibung unserer algorithmischen Ideen, sowie Experimente zu diesen im Stil des paper \cite{foerster2021} und eine Einordnung der Resultate dieser Experimente.
+Außerdem gehen wir auf die Arbeit einer anderen Gruppe im Fachprojekt ein, die wir versucht haben zu replizieren.
 
 \section{Theoretische Grundlagen}
 \textcolor{red}{Hier wird etwas zum Paper stehen}\cite{foerster2021}.
@@ -154,6 +167,90 @@ Da es aus Zeitgr\"unden sowie mangelnder Rechenressourcen nicht so einfach m\"og
 diese Algorithmen auf sehr gro\ss en Tologien zu testen,
 kann nicht mit Sicherheit gesagt, wie hoch die Berechnungszeit in Topologien mit 50 oder mehr Knoten wirklich ist.
 Daher ist es schwer, diese Algorithmen (mit Ausnahme von $inverse\_capacity$ in solchen Topologien dynamisch zu verwenden.
+\subsubsection{Centrality-Metriken mit inverse capacity}
+Hier war der Gedanke, den Algorithmus inverse capacity, der statisch auf der Topologie (also Demand unabhängig) berechnet wird, mit Zentralitätswerten zu erweitern.
+
+Ich habe mich für die Zentralitätswerte closeness-, eigenvector- und betweeness-Zentralität entscheiden.
+Im Folgenden werden nun die Zentralitätsmetriken definiert (Definitionen aus \cite{guide}), und dann erläutet warum diese ausgewählt wurden:
+
+\begin{enumerate}
+    \item \textbf{Adjazenzmatrix}
+    Adjazenzmatrix \texttt{A} wird benutzt um einen Graphen als Matrix darzustellen.
+
+    Für dies gilt: $a_{ik} = \begin{cases} 1 & \text{wenn Knoten i und k eine Kante verbindet}, \\ 0 & \text{sonst} \end{cases}$ 
+
+    \item \textbf{closeness-centrality}
+    Wie im Namen bereits benannt, berechnet diese Metrik, wie nah ein Knoten allen anderen ist.
+    Die closeness-centrality $c_i$ des Knoten $i$:
+    \begin{center}
+        $c_i = \frac{1}{\sum_{j\neq i} H(\mathcal{P}_{i\rightarrow j})}$
+    \end{center}
+    $\mathcal{P}_{i\rightarrow j}$ ist der kürzeste Pfad von Knoten i nach Knoten j.
+    
+    $H(\mathcal{P}_{i\rightarrow j})$ ist die Anzahl an Kanten, die genutzt werden müssen, um von Knoten $i$ nach Knoten $j$ zu kommen.
+    
+    Je höher die closeness-Metrik, desto zentraler ist der Knoten im Graph. 
+    
+    \item \textbf{betweenness-centrality}
+    Die betweenness-centrality gibt das Verhältnis aller kürzesten Wege, die durch einen Knoten $i$ führen, zur Menge aller kürzesten Wege an.
+    
+    Die betweenness-centrality eines Knoten $i$:
+    \begin{center}
+        $b_i = \sum_{s,t\in \mathcal{N}} \frac{|\mathcal{P}_{s\rightarrow t}(i)|}{|\mathcal{P}_{s\rightarrow t}|}$    
+    \end{center}
+    wobei $|\mathcal{P}_{s\rightarrow t}|$ die Anzahl aller kürzesten Wege von $s$ nach $t$ ist und $|\mathcal{P}_{s\rightarrow t}(i)|$ die Anzahl dieser Wege, die durch den Knoten $i$ verlaufen. 
+    
+     
+    \item \textbf{eigenvector-centrality):}
+     
+     Die eigenvektor-centrality $x_i$ eines Knotens $i$ ist das $i$-te Element des Eigenvektors, die dem größten Eigenwert $\lambda_1$ der Adjazenz-Matrix A entspricht.
+     
+     Die Formel zur Berechnung lautet:
+     \begin{center}
+     $x_i = \frac{1}{\lambda_1}\sum^N_{k=1}a_{ik}x_k$
+     \end{center}
+     
+     Hat ein Knoten einen hohen eigenvektor-centrality, lässt sich folgern, dass der Knoten mit anderen wichtigen Knoten verbunden ist.
+
+\end{enumerate}
+
+Die closeness-centrality wurde gewählt, da die closeness aussagt wie vielen Kanten ein Knoten von allen anderen entfernt ist, daher potenziell viele Datenstörme durch diesen Knoten fließen können.
+Die betweeness-centrality wurde gewählt, da Knoten mit hoher betweeness, an vielen kürzesten Wegen beteiligt sind, hier also das Risiko für Link Überlastung hoch ist.
+Die eigenvector-centrality wurde gewählt, da eine hohe eigenvector-centrality darauf schließen lässt, dass der Knoten ein guter "Verteiler"-Knoten im Netz ist.
+
+In der tatsächlichen Implementierung wurden die centrality Berechnungen von NetworkKit benutzt, und dort zusätzlich noch normalisiert.
+
+
+Um inverse capacity mit den centrality Werten zu verrechnen wird folgende Formel genutzt (für die Kante von i nach j:
+\begin{center}
+    $new\_weight_{ij} = inverse\_capacity\_weight * \frac{CentralityNode_i + CentralityNode_j}{2}$
+\end{center}
+
+In \ref{fig:kai_p1_results} gibt es neben \$centralityInverseCapacity auch noch \$centralityCapacity, dass ist der Algorithmus ohne InverseCapacity, also:
+
+\begin{center}
+    $new\_weight_{ij} = weight * \frac{CentralityNode_i + CentralityNode_j}{2}$
+\end{center}
+
+Diese dürften schlecht abschneiden, sind hier jedoch mit dabei, um den Unterschied zu unterstreichen.
+
+
+%%Auswertung Projekt 1
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/kai_p1_results.png}
+    \caption{Ergebnisse für centrality-inverse-capacity}
+    \label{fig:kai_p1_results}
+\end{figure}
+
+
+Wie man in Abbildung \ref{fig:kai_p1_results} zu sehen ist, ist der neue Algorithmus keine Verbesserung auf den getesteten Topologien.
+Am schlechtesten schneidet hier der Algorithmus mit der betweeness centrality ab, dicht gefolgt von der eigenvector centrality.
+Die closeness centrality schneidet mit am besten ab und ist im Beispiel für "Abilene" gleich auf mit inverse capacity.
+Die Algorithmen ohne inverse capacity sind, schlechter, jedoch (abgesehen von Abilene) nah an den anderen Algorithmen dran.
+
+Die schlechtere Performance kann dadurch erklärt werden, dass die weights der Kanten bei reinem Inverse Capacity, zwei kürzeste Wege zwischen zwei Knoten entstehen lassen, und diese durch die centralities dann, durch die neue Gewichtung, nur noch einen kürzesten Weg haben.
+Dadurch werden dann einzelne Links überlastet und die MLU wird schlechter.
 \subsection{Experimente zu Projekt 2}
 In diesem Projekt ging es darum, die eigene algorithmische Idee zu nehmen und in einem virtuellen Netzwerk\footnote{\url{https://github.com/nikolaussuess/nanonet}, siehe Abschnitt \ref{sec:resouces}} zu testen. 
 Dieses Projekt wurde ebenfalls mithilfe eines bereits existierenden Repositories\footnote{\url{https://github.com/fruitiestPunch/FaPro_P2}, siehe Abschnitt \ref{sec:resouces}} bearbeitet.
@@ -207,6 +304,39 @@ $\vdots$ & & & \\
 \bottomrule
 \end{tabular}
 \end{table}
+\subsubsection{Centrality-Metriken mit inverse capacity}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/kai_p2_baseTopo.png}
+    \caption{Topologie für die Tests des Algorithmus centrality Metriken mit inverse capacity}
+    \label{fig:kai_p2_baseTopo}
+\end{figure}
+Die Topologie für die Tests der centrality Metriken mit inverse capacity ist die in Abbildung \ref{fig:kai_p2_baseTopo}
+Es gibt zwei Demands, einmal von 0 nach 4 mit Größe 1, und einmal von 3 nach 4 mit Größe 8.
+Außerdem wurde hier nur die centrality Metrik closeness benutzt, da diese im ersten Projekt am besten der drei Metriken abgeschlossen hat.
+
+Warum diese Topologie genutzt wurde, wird klar wenn man sich die Ergebnisse anschaut.
+Wie man in Abbildung \ref{fig:kai_p2_results} sehen kann, performt auf dieser Topologie der Algorithmus besser als inverse capacity.
+Der Grund dafür wird in Abbildung \ref{fig:kai_p2_AdTopo} verdeutlicht.
+Inverse capacity schickt beide Demands über die Kante zwischen 3 und 4, dadurch wird diese überlastet.
+Inverse capacity mit der closeness Metrik schick ein Demand von 3 nach 4 und den anderen über 0 nach 2 nach 4 und verhindert dadurch die Überlastung.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/kai_p2_TopoAd.png}
+    \caption{Topologie mit ausgerechneten Werte, Pfeile geben die jeweils genommenen Pfade an}
+    \label{fig:kai_p2_AdTopo}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/kai_p2_results.png}
+    \caption{Ergebnisse für Algorithmus centrality Metriken mit inverse capacity}
+    \label{fig:kai_p2_results}
+\end{figure}
+
+
 \section{Replikation}
 Im Folgenden werden die Ergebnisse und Einsichten der Replikationen von Gruppe 2 vorgestellt.
 \subsection{Replikation zu Projekt 1}
