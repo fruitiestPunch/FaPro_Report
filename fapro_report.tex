@@ -329,27 +329,23 @@ Zum Testen dieses Algorithmus wurde eine vereinfachte Topologie mit wenigen Anfo
 In Abbildung \ref{fig:pouriaSimpleTopology} ist die finale Topologie zu sehen, 
 wobei hier bereits der $inverse\_capacity$-Algorithmus darauf ausgef\"uhrt wurde.
 In der Tabelle \ref{tab:pouriaSimpleTopology} sind die beiden Anforderungen sowie deren Start- und Endknoten angegeben.
-Die Timeouts in diesen Experimente haben zu einigen Problemen gef\"uhrt.
-Da der Rechner auf dem speziell dieser Algorithmus getestet wurde,
-relativ schwach war (4GB RAM), wird vermutet, 
-dass die Timeouts
-\footnote{\url{https://github.com/nikolaussuess/nanonet}, siehe Abschnitt \ref{sec:resouces}}
-\footnote{\emph{nanonet\_batch.py} aus \url{https://github.com/fruitiestPunch/FaPro_P2}, siehe Abschnitt \ref{sec:resouces}}
-\begin{verbatim}
-  at now+2min
-\end{verbatim}
-und 
-\begin{verbatim}
-  sleep(8 * 60)
-\end{verbatim}
-nicht ausgereicht haben, sodass einige der Prozesse fr\"uhzeitig abgerbochen wurden.
-Abbildung \ref{fig:pouria_boxplot_no_boxes} zeigt dabei die MLU-Werte aller drei Algorithmen im Vergleich.
-Die Tatsache, dass die Boxplots hier nur als Striche dargestellt werden, weist daraufhin, dass es keine Streuung in den finalen Ergebnissen gab,
-was auf das fr\"uhzeitige Abbrechen einiger Rechenprozesse zur\"uckgef\"uhrt werden kann.
+In diesem Projekt kam es zu einigen Problemen, die durch die Rechenst\"arke der genutzten Hardware verschuldet wurden.
+Abschnitt \ref{sec:alt_boxplot} befasst sich st\"arker mit diesem Punkt und dessen Auswirkungen.
+Abbildung \ref{fig:pouria_boxplot_no_boxes} zeigt dabei die MLU-Werte von zwei Algorithmen im Vergleich.
+Hierf\"ur wurden der Weights-Algorithmus und der sequentielle Kombinations aus $inverse\_capacity$ und $demand\_first\_waypoints$ miteinander verglichen.\newline
+Anhand der Form der Boxplots ist zu erkennen, dass es keine bis minimale Streuung in den finalen Ergebnissen gab.
+Im Allgemeinen schneiden beide Algorithmen gleich gut ab, denn bei in beiden F\"allen liegt die durchschnittliche MLU bei unter 2.
+Allerdings ist in Abbildung \ref{fig:pouria_boxplot_no_boxes} auch zu erkennen, dass beide Ausrei\ss er enthalten,
+wobei der Ausrei\ss er vom Weights-Algorithmus wesentlich besser liegt, als der andere.
+Es wird vermutet, dass die starke Spezialisierung des SC-Algorthmus auf der gegebenen Topologie dazu f\"uhrt, 
+dass er im Allgemeinen sehr gute MLU-Ergebnisse liefert,
+aber im \emph{worst-case} nicht so gut abschenidet.
+Im Vergleich liefert Weights-Algorithmus generell konsistent \"ahnliche Ergebnisse,
+sodass er im \emph{worst-case} dennoch nicht ganz schlecht ausgeht.
 \begin{figure}
 \centering
-\includegraphics[width=\linewidth]{figures/pouria_boxplot_no_boxes.pdf}
-\caption{Vergleich von drei Algorithmen als Boxplotdiagramme. Legende: 0 = Joint, 1 = Weights, 2 = Pouria.}
+\includegraphics[width=\linewidth]{figures/pouria_boxplot_no_boxes.png}
+\caption{Vergleich von zwei Algorithmen als Boxplotdiagramme.}
 \label{fig:pouria_boxplot_no_boxes}
 \end{figure}
 % Das [h] kann weg, dann findet Tabelle automatisch den besten Platz
@@ -518,6 +514,9 @@ Vielen Dank an Marvin f\"ur seine Hilfe und Geduld mit unseren Problemen. Ohne s
 % Appendix
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \appendix
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Onlineressourcen
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Onlineressourcen}
 \label{sec:resouces}
 Im Rahmen dieses Fachprojekts wurden drei \"offentliche Repositories als Hauptquellen verwendet. Die ersten beiden Repositories\newline
@@ -526,4 +525,38 @@ Im Rahmen dieses Fachprojekts wurden drei \"offentliche Repositories als Hauptqu
 \url{https://github.com/tfenz/TE_SR_WAN_simulation} und \newline
 \url{https://github.com/nikolaussuess/TE_SR_experiments_2021}\newline
 sind. Die dritte Hauptquelle stellt \url{https://github.com/nikolaussuess/nanonet} dar, welche zur Erstellung von vom Projekt les- und interpretierbaren Netzwerktopologiedaten verwendet wurde.
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Alternativer Boxplot
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Alternativer Boxplot}
+\label{sec:alt_boxplot}
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{figures/pouria_boxplot_no_real_results.pdf}
+\caption{Vergleich von drei Algorithmen als Boxplotdiagramme. Legende: 0 = Joint, 1 = Weights, 2 = Pouria.}
+\label{fig:pouria_boxplot_no_real_results}
+\end{figure}
+Die Timeouts in den Experimenten von Projekt 2 haben zu einigen Problemen gef\"uhrt.
+Speziell im Falle von Abschnitt \ref{sec:seq_com_p2} war der Rechner, 
+auf dem der dortige Algorithmus getestet wurde,
+wesentlich leistungsschw\"acher (4GB RAM) als die anderen Rechner.
+Daher wird vermutet, 
+dass die Timeouts
+\footnote{\url{https://github.com/nikolaussuess/nanonet}, siehe Abschnitt \ref{sec:resouces}}
+\footnote{\emph{nanonet\_batch.py} aus \url{https://github.com/fruitiestPunch/FaPro_P2}, siehe Abschnitt \ref{sec:resouces}}
+\begin{verbatim}
+  at now+2min
+\end{verbatim}
+und 
+\begin{verbatim}
+  sleep(8 * 60)
+\end{verbatim}
+nicht ausgereicht haben, sodass einige der Prozesse fr\"uhzeitig abgerbochen wurden.
+Abbildung \ref{fig:pouria_boxplot_no_real_results} zeigt dabei die MLU-Werte aller drei Algorithmen im Vergleich.
+Die Tatsache, dass die Boxplots hier nur als Striche dargestellt werden, weist daraufhin, dass es keine Streuung in den finalen Ergebnissen gab,
+was auf das fr\"uhzeitige Abbrechen einiger Rechenprozesse zur\"uckgef\"uhrt werden kann.
+% bug in the acmart document class
+% added balance on last page to circumvent it
+\balance
 \end{document}
