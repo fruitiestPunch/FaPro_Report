@@ -95,7 +95,7 @@ und sorgt damit fuer einen reibungslosen Datenverkehr ueberall auf der Welt.
 Wie gut das Routing innerhalb einer Netzwerktopologie ist, wird durch den darunterliegenden Routingalgorithmus bestimmt.
 Hierf\"ur gibt es verschiedenste Ans\"atze mit variierender Komplexit\"at und Erfolgswahrscheinlichkeit.
 
-Deswegen haben wir uns im Rahmen des Fachprojekts "Routingalgorithmen" n\"aher mit den verschiedenen Algorithmen besch\"aftigt und haben eigene Variationen dieser Algorithmen erstellt um ein tieferes Verst\"andnis der Materie zu erlangen.
+Deswegen haben wir uns im Rahmen des Fachprojekts "Routingalgorithmen" n\"aher mit den verschiedenen Algorithmen auseinandergesetzt und haben eigene Variationen dieser Algorithmen erstellt um ein tieferes Verst\"andnis der Materie zu erlangen.
 In diesem Report fassen wir die Ergebnisse unserer Arbeit zusammen.
 Dies umfasst eine Beschreibung unserer algorithmischen Ideen, sowie Experimente zu diesen im Stil des paper \cite{foerster2021} und eine Einordnung der Resultate dieser Experimente.
 Au\ss erdem gehen wir auf die Arbeit einer anderen Gruppe im Fachprojekt ein, die wir versucht haben zu replizieren.
@@ -160,19 +160,20 @@ Daraufhin bildeten sich zwei Fragen.
 \caption{Vergleich von vier Algorithmen mit syntetischen Anforderungen auf der Abilene-Topologie. Legende: greedy waypoints in blau, inverse capacity in gelb, SeqComWayCap in gr\"un, SeqComCapWay in rot.}
 \label{fig:pouriaScatterReal}
 \end{figure}
-Die Abbildungen \ref{fig:pouriaBoxplotSynthetic} und \ref{fig:pouriaBoxplotReal} geben eine Antwort auf Frage 1.
+Die Abbildungen \ref{fig:pouriaBoxplotSynthetic} und \ref{fig:pouriaBoxplotReal} geben eine Antwort auf Frage 1.\newline
 Sie zeigen, 
 dass die sequentielle Kombination beider Algorithmen in beiden F\"allen mindestens genauso gut ist wie eines seiner Bestandteile. 
 Im Fall von $SeqComCapWay$ ist dieser im Durchschnitt sogar besser als beide Algorithmen.
 Dies l\"asst sich darauf zur\"uckf\"uhren, 
-dass die Kantengewichte durch den Algorithmus $inverse\_capacity$ zu Beginn verbessert werden 
+dass die Kantengewichte durch den $inverse\_capacity$-\newline
+Algorithmus zu Beginn verbessert werden 
 und anschlie\ss end durch den zweiten Algorithmus weiter verbessert werden, falls m\"oglich.
 Im Folgenden wird daher nur noch auf die sequentielle Kombination \emph{SeqComCapWay} (in rot) eingegangen.\newline
 Die Abbildungen \ref{fig:pouriaScatterSynthetic} und \ref{fig:pouriaScatterReal} hingegen sind relevant f\"ur die Frage 2. 
 Diese zeigen einen etwas genaueren Blick auf die Rechenergebnisse geplottet \"uber die daf\"ur ben\"otigte Zeit.
 Hier kann auch direkt gesehen werden, dass $inverse\_capacity$ mit Abstand der schnellste hier verwendete Algorigthmus ist.
 Dies ist besonders vorteilhaft, da es bedeutet, 
-dass die sequentielle Kombination aus $inverse\_capacity$ und $greedy\_waypoints$ kaum l\"anger mehr Berechnungszeit ben\"otigt als $greedy\_waypoints$ alleine.
+dass die sequentielle Kombination aus $inverse\_capacity$ und $greedy\_waypoints$ kaum mehr Berechnungszeit ben\"otigt als $greedy\_waypoints$ alleine.
 Somit konnte empirisch gezeigt werden, 
 dass in diesem "vereinfachten" Beispiel die Kombination der oben genannten Algorithmen nicht nur im Durchschnitt bessere MLU-Ergebnisse liefert, 
 sondern das auch in derselben Zeit erledigt.
@@ -187,7 +188,7 @@ Daher ist es schwer, diese Algorithmen (mit Ausnahme von $inverse\_capacity$ in 
 % Kai
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Centrality-Metriken mit inverse capacity}
-Hier war der Gedanke, den Algorithmus inverse capacity, der statisch auf der Topologie (also Demand unabh\"angig) berechnet wird, mit Zentralit\"atswerten zu erweitern.
+Der Gedanken hier war, den Algorithmus inverse capacity, der statisch auf der Topologie (also unabh\"angig von den demands) berechnet wird, mit Zentralit\"atswerten zu erweitern.
 
 Ich habe mich f\"ur die Zentralit\"atswerte closeness-, eigenvector- und betweeness-Zentralit\"at entscheiden.
 Im Folgenden werden nun die Zentralit\"atsmetriken definiert (Definitionen aus \cite{guide}), und dann erl\"autet warum diese ausgew\"ahlt wurden:
@@ -195,11 +196,12 @@ Im Folgenden werden nun die Zentralit\"atsmetriken definiert (Definitionen aus \
 \begin{enumerate}
 \item \textbf{Adjazenzmatrix}
 Adjazenzmatrix \texttt{A} wird benutzt um einen Graphen als Matrix darzustellen.
-
-F\"ur dies gilt: $a_{ik} = \begin{cases} 1 & \text{wenn Knoten i und k eine Kante verbindet}, \\ 0 & \text{sonst} \end{cases}$ 
-
+Hierf\"ur gilt:
+\[
+a_{ik} = \begin{cases} 1 & \text{wenn Knoten i und k eine Kante verbindet}, \\ 0 & \text{sonst} \end{cases}
+\]
 \item \textbf{closeness-centrality}
-Wie im Namen bereits benannt, berechnet diese Metrik, 
+Wie der Name bereits vermuten l\"asst, berechnet diese Metrik, 
 wie nah ein Knoten allen anderen ist.
 Die closeness-centrality $c_i$ des Knoten $i$:
 \[
@@ -243,10 +245,11 @@ Die eigenvector-centrality wurde gew\"ahlt, da eine hohe eigenvector-centrality 
 In der tats\"achlichen Implementierung wurden die centrality Berechnungen von NetworkKit benutzt, und dort zus\"atzlich noch normalisiert.
 
 Um inverse capacity mit den centrality Werten zu verrechnen wird folgende Formel genutzt (f\"ur die Kante von i nach j:
-\[
-new\_weight_{ij} = inverse\_capacity\_weight * \frac{CentralityNode_i + CentralityNode_j}{2}
-\]
-In \ref{fig:kai_p1_results} gibt es neben \$centralityInverseCapacity auch noch \$centralityCapacity, dass ist der Algorithmus ohne InverseCapacity, also:
+\begin{align*}
+&new\_weight_{ij} =\\
+&inverse\_capacity\_weight * \frac{CentralityNode_i + CentralityNode_j}{2}
+\end{align*}
+In \ref{fig:kai_p1_results} gibt es neben dem \$centralityInverseCapacity auch noch den \$centralityCapacity, dass ist der Algorithmus ohne InverseCapacity, also:
 \[
 new\_weight_{ij} = weight * \frac{CentralityNode_i + CentralityNode_j}{2}
 \]
@@ -304,7 +307,7 @@ OSPF mit UW bietet folgende Merkmale:
 durch die Verwendung einheitlicher Gewichte kann OSPF mit UW  keine spezifischen Leistungsmerkmale oder Netzwerkanforderungen ber\"ucksichtigen. 
 Dies kann in einigen Anwendungsf\"allen zu Suboptimalit\"at in Bezug auf Bandbreite,
 Verz\"ogerung oder andere wichtige Faktoren f\"uhren.
-\item Nicht empfohlen in komplexen Netzwerken mit unterschiedlichen Leistungseigenschaften der Verbindungen , 
+\item Es ist nicht empfohlen in komplexen Netzwerken mit unterschiedlichen Leistungseigenschaften der Verbindungen, 
 da die einheitliche Gewichte nicht auf die individuellen Anforderungen reagieren k\"onnen.
 \item Empfohlen in Netzwerken mit homogenen Verbindungen, bei denen keine signifikanten Unterschiede in den Leistungseigenschaften bestehen.
 \end{enumerate}
@@ -517,5 +520,10 @@ Vielen Dank an Marvin f\"ur seine Hilfe und Geduld mit unseren Problemen. Ohne s
 \appendix
 \section{Onlineressourcen}
 \label{sec:resouces}
-Im Rahmen dieses Fachprojekts wurden drei \"offentliche Repositories als Hauptquellen verwendet. Die ersten beiden Repositories \url{https://github.com/fruitiestPunch/FaPro_P1} und \url{https://github.com/fruitiestPunch/FaPro_P2}, welche \emph{forks} von \url{https://github.com/tfenz/TE_SR_WAN_simulation} und \url{https://github.com/nikolaussuess/TE_SR_experiments_2021} sind. Die dritte Hauptquelle stellt \url{https://github.com/nikolaussuess/nanonet} dar, welche zur Erstellung von vom Projekt les- und interpretierbaren Netzwerktopologiedaten verwendet wurde.
+Im Rahmen dieses Fachprojekts wurden drei \"offentliche Repositories als Hauptquellen verwendet. Die ersten beiden Repositories\newline
+\url{https://github.com/fruitiestPunch/FaPro_P1} und \newline
+\url{https://github.com/fruitiestPunch/FaPro_P2}, welche \emph{forks} von\newline
+\url{https://github.com/tfenz/TE_SR_WAN_simulation} und \newline
+\url{https://github.com/nikolaussuess/TE_SR_experiments_2021}\newline
+sind. Die dritte Hauptquelle stellt \url{https://github.com/nikolaussuess/nanonet} dar, welche zur Erstellung von vom Projekt les- und interpretierbaren Netzwerktopologiedaten verwendet wurde.
 \end{document}
