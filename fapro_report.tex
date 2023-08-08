@@ -26,7 +26,7 @@
 \author{Pouria Araghchi}
 \affiliation{%
   \institution{TU Dortmund}
-  \streetaddress{Otto-Hahn-Straße 14}
+  \streetaddress{Otto-Hahn-Stra\ss e 14}
   \city{Dortmund}
   \country{Deutschland}}
 \email{pouria.araghchi@tu-dortmund.de}
@@ -34,7 +34,7 @@
 \author{Kai Lukas Ilmenau}
 \affiliation{%
   \institution{TU Dortmund}
-  \streetaddress{Otto-Hahn-Straße 14}
+  \streetaddress{Otto-Hahn-Stra\ss e 14}
   \city{Dortmund}
   \country{Deutschland}}
 \email{kai.ilmenau@tu-dortmund.de}
@@ -42,7 +42,7 @@
 \author{Naveed Niazi}
 \affiliation{%
   \institution{TU Dortmund}
-  \streetaddress{Otto-Hahn-Straße 14}
+  \streetaddress{Otto-Hahn-Stra\ss e 14}
   \city{Dortmund}
   \country{Deutschland}}
 \email{naveed.niazi@tu-dortmund.de}
@@ -56,11 +56,11 @@ In diesem Report werden die Ergebnisse unserer Arbeit im Rahmen des Fachprojekts
 Wir haben die Algorithmen auf die Maximum Link Utilization (MLU) nach \cite{foerster2021} untersucht.
 \textcolor{red}{Beschreibung der Ergebnisse von Pourias Algorithmus}
 Der Algorithmus, der inverse capacity mit centrality Metriken verrechnet, ist meistens schlechter als inverse capacity, 
-da reines inverse capacity öfter zwei kürzste Wege finden um demands gleichmäßiger zu verteilen damit einzelne Links nicht überlastet werden.
-Es wird jedoch auch gezeigt, dass Topologien gefunden werden können, bei den pures inverse capacity eine schlechtere MLU hat.
+da reines inverse capacity \"ofter zwei k\"urzste Wege finden um demands gleichm\"a\ss iger zu verteilen damit einzelne Links nicht \"uberlastet werden.
+Es wird jedoch auch gezeigt, dass Topologien gefunden werden k\"onnen, bei den pures inverse capacity eine schlechtere MLU hat.
 \textcolor{red}{Beschreibung der Ergebnisse von Naveeds Algorithmus}
 Die Replikation andere Gruppen im ersten Projektteil nicht erfolgreich, und im zweiten schon, 
-jedoch haben wir daraus die Lehre gezogen wie wir unsere Arbeit besser replizierbar machen und das frühe Kommunikation mit den anderen Gruppen wichtig ist.
+jedoch haben wir daraus die Lehre gezogen wie wir unsere Arbeit besser replizierbar machen und das fr\"uhe Kommunikation mit den anderen Gruppen wichtig ist.
 \end{abstract}
 
 \begin{CCSXML}
@@ -84,6 +84,9 @@ jedoch haben wir daraus die Lehre gezogen wie wir unsere Arbeit besser replizier
 
 \maketitle
 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Einleitung
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Einleitung}
 In der heutigen Zeit werden mehrere Millionen Datenpakete von und zu Knotenpunkten verschickt.
 Daher ist das \emph{Routing} von diesen Datenpaketen in der heutigen Zeit wichtiger denn je.
@@ -92,18 +95,31 @@ und sorgt damit fuer einen reibungslosen Datenverkehr ueberall auf der Welt.
 Wie gut das Routing innerhalb einer Netzwerktopologie ist, wird durch den darunterliegenden Routingalgorithmus bestimmt.
 Hierf\"ur gibt es verschiedenste Ans\"atze mit variierender Komplexit\"at und Erfolgswahrscheinlichkeit.
 
-Deswegen haben wir uns im Rahmen des Fachprojekts "Routingalgorithmen" näher mit den verschiedenen Algorithmen beschäftigt und haben eigene Variationen dieser Algorithmen erstellt um ein tieferes Verständnis der Materie zu erlangen.
+Deswegen haben wir uns im Rahmen des Fachprojekts "Routingalgorithmen" n\"aher mit den verschiedenen Algorithmen besch\"aftigt und haben eigene Variationen dieser Algorithmen erstellt um ein tieferes Verst\"andnis der Materie zu erlangen.
 In diesem Report fassen wir die Ergebnisse unserer Arbeit zusammen.
 Dies umfasst eine Beschreibung unserer algorithmischen Ideen, sowie Experimente zu diesen im Stil des paper \cite{foerster2021} und eine Einordnung der Resultate dieser Experimente.
-Außerdem gehen wir auf die Arbeit einer anderen Gruppe im Fachprojekt ein, die wir versucht haben zu replizieren.
+Au\ss erdem gehen wir auf die Arbeit einer anderen Gruppe im Fachprojekt ein, die wir versucht haben zu replizieren.
 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Theorie
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Theoretische Grundlagen}
 \textcolor{red}{Hier wird etwas zum Paper stehen}\cite{foerster2021}.
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Umsetzung
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Umsetzung}
 In diesem Abschnitt werden unsere Projekte und die dazugeh\"origen Ideen vorgestellt.
 Die beiden Projekte sind in Unterabschnitte und die algorithmischen Ideen und Umsetzungen des jeweiligen Gruppenmitglieds in Paragraphen unterteilt. 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Projekt 1
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Algorithmen zu Projekt 1}
 In Projekt 1 ging es darum, eine algorithmische Idee auf Basis von \cite{foerster2021} herauszuarbeiten und diese mithilfe desselben Git-Prokjekts\footnote{\url{https://github.com/fruitiestPunch/FaPro_P1}, siehe Abschnitt \ref{sec:resouces}} mit alternativen Routingalgorithmen zu vergleichen. 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Pouria
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Sequential combination aus inverse capacity und demand first waypoints}
 Der Kerngedanke hier war es, einen einen schnellen Algorithmus zu finden, 
 welcher hinreichend gute Ergebnisse in Bezug auf die MLU abliefert.
@@ -167,93 +183,143 @@ Da es aus Zeitgr\"unden sowie mangelnder Rechenressourcen nicht so einfach m\"og
 diese Algorithmen auf sehr gro\ss en Tologien zu testen,
 kann nicht mit Sicherheit gesagt, wie hoch die Berechnungszeit in Topologien mit 50 oder mehr Knoten wirklich ist.
 Daher ist es schwer, diese Algorithmen (mit Ausnahme von $inverse\_capacity$ in solchen Topologien dynamisch zu verwenden.
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Kai
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Centrality-Metriken mit inverse capacity}
-Hier war der Gedanke, den Algorithmus inverse capacity, der statisch auf der Topologie (also Demand unabhängig) berechnet wird, mit Zentralitätswerten zu erweitern.
+Hier war der Gedanke, den Algorithmus inverse capacity, der statisch auf der Topologie (also Demand unabh\"angig) berechnet wird, mit Zentralit\"atswerten zu erweitern.
 
-Ich habe mich für die Zentralitätswerte closeness-, eigenvector- und betweeness-Zentralität entscheiden.
-Im Folgenden werden nun die Zentralitätsmetriken definiert (Definitionen aus \cite{guide}), und dann erläutet warum diese ausgewählt wurden:
+Ich habe mich f\"ur die Zentralit\"atswerte closeness-, eigenvector- und betweeness-Zentralit\"at entscheiden.
+Im Folgenden werden nun die Zentralit\"atsmetriken definiert (Definitionen aus \cite{guide}), und dann erl\"autet warum diese ausgew\"ahlt wurden:
 
 \begin{enumerate}
-    \item \textbf{Adjazenzmatrix}
-    Adjazenzmatrix \texttt{A} wird benutzt um einen Graphen als Matrix darzustellen.
+\item \textbf{Adjazenzmatrix}
+Adjazenzmatrix \texttt{A} wird benutzt um einen Graphen als Matrix darzustellen.
 
-    Für dies gilt: $a_{ik} = \begin{cases} 1 & \text{wenn Knoten i und k eine Kante verbindet}, \\ 0 & \text{sonst} \end{cases}$ 
+F\"ur dies gilt: $a_{ik} = \begin{cases} 1 & \text{wenn Knoten i und k eine Kante verbindet}, \\ 0 & \text{sonst} \end{cases}$ 
 
-    \item \textbf{closeness-centrality}
-    Wie im Namen bereits benannt, berechnet diese Metrik, wie nah ein Knoten allen anderen ist.
-    Die closeness-centrality $c_i$ des Knoten $i$:
-    \begin{center}
-        $c_i = \frac{1}{\sum_{j\neq i} H(\mathcal{P}_{i\rightarrow j})}$
-    \end{center}
-    $\mathcal{P}_{i\rightarrow j}$ ist der kürzeste Pfad von Knoten i nach Knoten j.
+\item \textbf{closeness-centrality}
+Wie im Namen bereits benannt, berechnet diese Metrik, 
+wie nah ein Knoten allen anderen ist.
+Die closeness-centrality $c_i$ des Knoten $i$:
+\[
+    c_i = \frac{1}{\sum_{j\neq i} H(\mathcal{P}_{i\rightarrow j})}
+\]
+$\mathcal{P}_{i\rightarrow j}$ ist der k\"urzeste Pfad von Knoten i nach Knoten j.
     
-    $H(\mathcal{P}_{i\rightarrow j})$ ist die Anzahl an Kanten, die genutzt werden müssen, um von Knoten $i$ nach Knoten $j$ zu kommen.
+$H(\mathcal{P}_{i\rightarrow j})$ ist die Anzahl an Kanten, die genutzt werden m\"ussen, um von Knoten $i$ nach Knoten $j$ zu kommen.
     
-    Je höher die closeness-Metrik, desto zentraler ist der Knoten im Graph. 
+Je h\"oher die closeness-Metrik, desto zentraler ist der Knoten im Graph. 
     
-    \item \textbf{betweenness-centrality}
-    Die betweenness-centrality gibt das Verhältnis aller kürzesten Wege, die durch einen Knoten $i$ führen, zur Menge aller kürzesten Wege an.
+\item \textbf{betweenness-centrality}
+Die betweenness-centrality gibt das Verh\"altnis aller k\"urzesten Wege, 
+die durch einen Knoten $i$ f\"uhren, zur Menge aller k\"urzesten Wege an.
     
-    Die betweenness-centrality eines Knoten $i$:
-    \begin{center}
-        $b_i = \sum_{s,t\in \mathcal{N}} \frac{|\mathcal{P}_{s\rightarrow t}(i)|}{|\mathcal{P}_{s\rightarrow t}|}$    
-    \end{center}
-    wobei $|\mathcal{P}_{s\rightarrow t}|$ die Anzahl aller kürzesten Wege von $s$ nach $t$ ist und $|\mathcal{P}_{s\rightarrow t}(i)|$ die Anzahl dieser Wege, die durch den Knoten $i$ verlaufen. 
-    
+Die betweenness-centrality eines Knoten $i$:
+\[
+b_i = \sum_{s,t\in \mathcal{N}} \frac{|\mathcal{P}_{s\rightarrow t}(i)|}{|\mathcal{P}_{s\rightarrow t}|}
+\]
+wobei $|\mathcal{P}_{s\rightarrow t}|$ die Anzahl aller k\"urzesten Wege von $s$ nach $t$ ist und $|\mathcal{P}_{s\rightarrow t}(i)|$ die Anzahl dieser Wege, die durch den Knoten $i$ verlaufen. 
+      
+\item \textbf{eigenvector-centrality):}
      
-    \item \textbf{eigenvector-centrality):}
+ Die eigenvektor-centrality $x_i$ eines Knotens $i$ ist das $i$-te Element des Eigenvektors, 
+ die dem gr\"o\ss ten Eigenwert $\lambda_1$ der Adjazenz-Matrix A entspricht.
      
-     Die eigenvektor-centrality $x_i$ eines Knotens $i$ ist das $i$-te Element des Eigenvektors, die dem größten Eigenwert $\lambda_1$ der Adjazenz-Matrix A entspricht.
+Die Formel zur Berechnung lautet:
+\[
+x_i = \frac{1}{\lambda_1}\sum^N_{k=1}a_{ik}x_k
+\]
      
-     Die Formel zur Berechnung lautet:
-     \begin{center}
-     $x_i = \frac{1}{\lambda_1}\sum^N_{k=1}a_{ik}x_k$
-     \end{center}
-     
-     Hat ein Knoten einen hohen eigenvektor-centrality, lässt sich folgern, dass der Knoten mit anderen wichtigen Knoten verbunden ist.
+Hat ein Knoten einen hohen eigenvektor-centrality, 
+l\"asst sich folgern, dass der Knoten mit anderen wichtigen Knoten verbunden ist.
 
 \end{enumerate}
 
-Die closeness-centrality wurde gewählt, da die closeness aussagt wie vielen Kanten ein Knoten von allen anderen entfernt ist, daher potenziell viele Datenstörme durch diesen Knoten fließen können.
-Die betweeness-centrality wurde gewählt, da Knoten mit hoher betweeness, an vielen kürzesten Wegen beteiligt sind, hier also das Risiko für Link Überlastung hoch ist.
-Die eigenvector-centrality wurde gewählt, da eine hohe eigenvector-centrality darauf schließen lässt, dass der Knoten ein guter "Verteiler"-Knoten im Netz ist.
+Die closeness-centrality wurde gew\"ahlt, da die closeness aussagt wie vielen Kanten ein Knoten von allen anderen entfernt ist, daher potenziell viele Datenst\"orme durch diesen Knoten flie\ss en k\"onnen.
+Die betweeness-centrality wurde gew\"ahlt, da Knoten mit hoher betweeness, an vielen k\"urzesten Wegen beteiligt sind, hier also das Risiko f\"ur Link \"uberlastung hoch ist.
+Die eigenvector-centrality wurde gew\"ahlt, da eine hohe eigenvector-centrality darauf schlie\ss en l\"asst, dass der Knoten ein guter "Verteiler"-Knoten im Netz ist.
 
-In der tatsächlichen Implementierung wurden die centrality Berechnungen von NetworkKit benutzt, und dort zusätzlich noch normalisiert.
+In der tats\"achlichen Implementierung wurden die centrality Berechnungen von NetworkKit benutzt, und dort zus\"atzlich noch normalisiert.
 
-
-Um inverse capacity mit den centrality Werten zu verrechnen wird folgende Formel genutzt (für die Kante von i nach j:
-\begin{center}
-    $new\_weight_{ij} = inverse\_capacity\_weight * \frac{CentralityNode_i + CentralityNode_j}{2}$
-\end{center}
-
+Um inverse capacity mit den centrality Werten zu verrechnen wird folgende Formel genutzt (f\"ur die Kante von i nach j:
+\[
+new\_weight_{ij} = inverse\_capacity\_weight * \frac{CentralityNode_i + CentralityNode_j}{2}
+\]
 In \ref{fig:kai_p1_results} gibt es neben \$centralityInverseCapacity auch noch \$centralityCapacity, dass ist der Algorithmus ohne InverseCapacity, also:
-
-\begin{center}
-    $new\_weight_{ij} = weight * \frac{CentralityNode_i + CentralityNode_j}{2}$
-\end{center}
-
-Diese dürften schlecht abschneiden, sind hier jedoch mit dabei, um den Unterschied zu unterstreichen.
+\[
+new\_weight_{ij} = weight * \frac{CentralityNode_i + CentralityNode_j}{2}
+\]
+Diese d\"urften schlecht abschneiden, sind hier jedoch mit dabei, um den Unterschied zu unterstreichen.
 
 
 %%Auswertung Projekt 1
 \begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]{figures/kai_p1_results.png}
-    \caption{Ergebnisse für centrality-inverse-capacity}
-    \label{fig:kai_p1_results}
+\centering
+\includegraphics[width=\linewidth]{figures/kai_p1_results.png}
+\caption{Ergebnisse f\"ur centrality-inverse-capacity}
+\label{fig:kai_p1_results}
 \end{figure}
 
 
 Wie man in Abbildung \ref{fig:kai_p1_results} zu sehen ist, ist der neue Algorithmus keine Verbesserung auf den getesteten Topologien.
 Am schlechtesten schneidet hier der Algorithmus mit der betweeness centrality ab, dicht gefolgt von der eigenvector centrality.
-Die closeness centrality schneidet mit am besten ab und ist im Beispiel für "Abilene" gleich auf mit inverse capacity.
+Die closeness centrality schneidet mit am besten ab und ist im Beispiel f\"ur "Abilene" gleich auf mit inverse capacity.
 Die Algorithmen ohne inverse capacity sind, schlechter, jedoch (abgesehen von Abilene) nah an den anderen Algorithmen dran.
 
-Die schlechtere Performance kann dadurch erklärt werden, dass die weights der Kanten bei reinem Inverse Capacity, zwei kürzeste Wege zwischen zwei Knoten entstehen lassen, und diese durch die centralities dann, durch die neue Gewichtung, nur noch einen kürzesten Weg haben.
-Dadurch werden dann einzelne Links überlastet und die MLU wird schlechter.
+Die schlechtere Performance kann dadurch erkl\"art werden, dass die weights der Kanten bei reinem Inverse Capacity, zwei k\"urzeste Wege zwischen zwei Knoten entstehen lassen, und diese durch die centralities dann, durch die neue Gewichtung, nur noch einen k\"urzesten Weg haben.
+Dadurch werden dann einzelne Links \"uberlastet und die MLU wird schlechter.
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Naveed
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Sequential Combination aus OSPF und Uniform Weights}
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{figures/naveed_p1.png}
+\caption{Plotergebnisse}
+\label{fig:naveed_p1}
+\end{figure}
+Der zentrale Gedanke dieses  Algorithmus bestand darin, 
+im Rahmen des ersten Projekts die urspr\"ungliche Kombination aus OSPF und Demand First Waypoint(DFW)  zu optimieren, 
+indem der DFW durch den Uniform Weights erstzt wurde. 
+Beide Algorithmen haben das Ziel, die Netzwerk\"uberlastung zu minimieren, indem sie die Linkgewichte anpassen. 
+Jedoch unterscheiden in ihrer Herangehensweise an das Traffic Engineering.\newline
+Der DFW-Algorithmus fokussiert sich darauf, den Verkehr zu spezifischen Zwischenpunkten im Netzwerk, 
+sogenannten Waypoints, zu leiten, um die Verkehrslast auszugleichen und Stau zu vermeiden. 
+Auf der anderen Seite zielt der UW-Algorithmus darauf ab, den Verkehr gleichm\"a\ss ig \"uber das gesamte Netzwerk zu verteilen.\newline
+Das Ziel bestand darin herauszufinden, 
+welche Kombination dieser Algorithmen in Bezug auf die Maximale Link-Auslastung(MLU) die besseren Ergebnisse f\"ur den Datenverkehr im Netwerk liefert.\newline
+Die Tests\footnote{https://github.com/fruitiestPunch/FaPro\_P1} f\"ur beide Algorithmen wurden erfolgreich durchgef\"uhrt, Allerdings gab es Schwierigkeiten beim Plotten der Ergebnisse aufgrund zahlreicher Fehlermeldungen, 
+und aufgrund mangelder Erfahrung mit Python fiel es schwer, diese Fehler zu beheben.\newline
+Dennoch wurden einige Ergebnisse wie die Prozesszeit und Ausf\"uhrungszeit beider Algorithmen manuell zusammengefasst, 
+wie in Abbildung \ref{fig:naveed_p1} dargetellt. 
+Die Auswertung zeigt, dass in einigen F\"allen die Kombination aus OSPF und DFW besser abschneidet, 
+w\"ahrend in anderen F\"allen die Kombination aus OSPF und UW bessere Ergebnisse liefert. 
+Im Durchschnitt kann man sagen, dass die Kombination von OSPF und DFW \"ahnlich gute Leistung erbringt wie OSPF mit UW.\newline
+OSPF mit UW bietet folgende Merkmale:
+\begin{enumerate}
+\item Einfache Konfiguration und Verwaltung des Routers, da alle Verbindungen die gleiche Kostenmetrik haben.
+\item Gleichm\"a\ss ige Lastverteilung \"uber das Netzwerk, da alle Verbindungen als gleichwertig behandelt warden.
+\item Begrenzte Optimierungsf\"ahigkeit: 
+durch die Verwendung einheitlicher Gewichte kann OSPF mit UW  keine spezifischen Leistungsmerkmale oder Netzwerkanforderungen ber\"ucksichtigen. 
+Dies kann in einigen Anwendungsf\"allen zu Suboptimalit\"at in Bezug auf Bandbreite,
+Verz\"ogerung oder andere wichtige Faktoren f\"uhren.
+\item Nicht empfohlen in komplexen Netzwerken mit unterschiedlichen Leistungseigenschaften der Verbindungen , 
+da die einheitliche Gewichte nicht auf die individuellen Anforderungen reagieren k\"onnen.
+\item Empfohlen in Netzwerken mit homogenen Verbindungen, bei denen keine signifikanten Unterschiede in den Leistungseigenschaften bestehen.
+\end{enumerate}
+Also wenn eine dynamische Anpassung des Routings, Ressourceneffizienz und die F\"ahigkeit, 
+auf Ver\"anderungen zu reagieren, wichtig sind, kann OSPF mit DFW geeigent sein. 
+Wenn hingegen eine einfache Konfiguration und gleichm\"a\ss ige Lastverteilung gew\"unscht sind, kann OSPF mit UW angemessen sein.
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Projekt 2
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Experimente zu Projekt 2}
 In diesem Projekt ging es darum, die eigene algorithmische Idee zu nehmen und in einem virtuellen Netzwerk\footnote{\url{https://github.com/nikolaussuess/nanonet}, siehe Abschnitt \ref{sec:resouces}} zu testen. 
 Dieses Projekt wurde ebenfalls mithilfe eines bereits existierenden Repositories\footnote{\url{https://github.com/fruitiestPunch/FaPro_P2}, siehe Abschnitt \ref{sec:resouces}} bearbeitet.
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Pouria
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Sequential combination aus inverse capacity und demand first waypoints}
 \label{sec:seq_com_p2}
 Zum Testen dieses Algorithmus wurde eine vereinfachte Topologie mit wenigen Anforderungen erstellt.
@@ -304,41 +370,69 @@ $\vdots$ & & & \\
 \bottomrule
 \end{tabular}
 \end{table}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Kai
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Centrality-Metriken mit inverse capacity}
-
 \begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]{figures/kai_p2_baseTopo.png}
-    \caption{Topologie für die Tests des Algorithmus centrality Metriken mit inverse capacity}
-    \label{fig:kai_p2_baseTopo}
+\centering
+\includegraphics[width=\linewidth]{figures/kai_p2_baseTopo.png}
+\caption{Topologie f\"ur die Tests des Algorithmus centrality Metriken mit inverse capacity}
+\label{fig:kai_p2_baseTopo}
 \end{figure}
-Die Topologie für die Tests der centrality Metriken mit inverse capacity ist die in Abbildung \ref{fig:kai_p2_baseTopo}
-Es gibt zwei Demands, einmal von 0 nach 4 mit Größe 1, und einmal von 3 nach 4 mit Größe 8.
-Außerdem wurde hier nur die centrality Metrik closeness benutzt, da diese im ersten Projekt am besten der drei Metriken abgeschlossen hat.
+Die Topologie f\"ur die Tests der centrality Metriken mit inverse capacity ist die in Abbildung \ref{fig:kai_p2_baseTopo}
+Es gibt zwei Demands, einmal von 0 nach 4 mit Gr\"o\ss e 1, und einmal von 3 nach 4 mit Gr\"o\ss e 8.
+Au\ss erdem wurde hier nur die centrality Metrik closeness benutzt, da diese im ersten Projekt am besten der drei Metriken abgeschlossen hat.
 
 Warum diese Topologie genutzt wurde, wird klar wenn man sich die Ergebnisse anschaut.
 Wie man in Abbildung \ref{fig:kai_p2_results} sehen kann, performt auf dieser Topologie der Algorithmus besser als inverse capacity.
-Der Grund dafür wird in Abbildung \ref{fig:kai_p2_AdTopo} verdeutlicht.
-Inverse capacity schickt beide Demands über die Kante zwischen 3 und 4, dadurch wird diese überlastet.
-Inverse capacity mit der closeness Metrik schick ein Demand von 3 nach 4 und den anderen über 0 nach 2 nach 4 und verhindert dadurch die Überlastung.
-
+Der Grund daf\"ur wird in Abbildung \ref{fig:kai_p2_AdTopo} verdeutlicht.
+Inverse capacity schickt beide Demands \"uber die Kante zwischen 3 und 4, dadurch wird diese \"uberlastet.
+Inverse capacity mit der closeness Metrik schick ein Demand von 3 nach 4 und den anderen \"uber 0 nach 2 nach 4 und verhindert dadurch die \"uberlastung.
 \begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]{figures/kai_p2_TopoAd.png}
-    \caption{Topologie mit ausgerechneten Werte, Pfeile geben die jeweils genommenen Pfade an}
-    \label{fig:kai_p2_AdTopo}
+\centering
+\includegraphics[width=\linewidth]{figures/kai_p2_TopoAd.png}
+\caption{Topologie mit ausgerechneten Werte, Pfeile geben die jeweils genommenen Pfade an}
+\label{fig:kai_p2_AdTopo}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{figures/kai_p2_results.png}
+\caption{Ergebnisse f\"ur Algorithmus centrality Metriken mit inverse capacity}
+\label{fig:kai_p2_results}
+\end{figure}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Naveed
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Sequential Combination aus OSPF und Uniform Weights}
+Um den Algorithmus im Nanonet zu testen, wurde eine Topologie1 erstellt, 
+die 5 Knoten umfasst, wie in Abbildung \ref{fig:naveed_p2_graph} dargestellt. 
+Dabei wurden allen Kanten gleichm\"a\ss ige Gewichtungen zugewiesen. 
+Anschlie\ss end wurden Demands von Knoten 0 zu Knoten 4 gesendet. 
+Um sicherzustellen, dass alle verf\"ugbaren Wege von 0 zu Knoten 4  genutzt werden,
+wurden Knoten 1 und 3 als sogenannte Waypoints hinzugef\"ugt.
+In Abbildung \ref{fig:naveed_p2_boxplot} ist der Vergleich zwischen JoinUW (oben) und der Sequential Combination aus OSPF und UW (unten) zu sehen.
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{figures/naveed_p2_graph.png}
+\caption{Plotergebnisse}
+\label{fig:naveed_p2_graph}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{figures/naveed_p2_boxplot.png}
+\caption{Topologie}
+\label{fig:naveed_p2_boxplot}
 \end{figure}
 
-\begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]{figures/kai_p2_results.png}
-    \caption{Ergebnisse für Algorithmus centrality Metriken mit inverse capacity}
-    \label{fig:kai_p2_results}
-\end{figure}
-
-
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Replikation
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Replikation}
 Im Folgenden werden die Ergebnisse und Einsichten der Replikationen von Gruppe 2 vorgestellt.
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Projekt 1
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Replikation zu Projekt 1}
 Die Replikation von diesem Projekt war zu Beginn leider etwas schwierig, weil in beiden F\"allen Abh\"angigkeiten fehlten.
 Ein gro\ss es Problem beim Replizieren des Deep-Learning-Projekts war, dass sich der Prozess nach einer Weile selbstst\"andig beendet hat.
@@ -353,6 +447,9 @@ Ein weiteres Problem beim Replizieren waren die Fehlermeldungen und Abbr\"uche b
 Diesem und \"ahnlichen Fehlern sind wir bei unser Bearbeitung ebenfalls begegnet und die Behebung hat sich als au\ss erordentlich schwierig erwiesen, weil dieser "Plottererror" innerhalb einer Python-Bibliothek liegt.
 Abbildung \ref{fig:repl_p1_plottererrror} zeigt einen solchen Fehler,
 welcher sich hartn\"ackig auch nach einigen Anpassungsversuchen weiterhin erhalten hat.
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Replikation
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Replikation zu Projekt 2}
 Die Replikation des Codes aus Gruppe 2 lief im Allgemeinen problemlos, wie die Abbildungen \ref{fig:repl_p2_daniel2} und \ref{fig:repl_p2_zixiang_10} zeigen.
 \begin{figure}
@@ -377,6 +474,10 @@ Nach wiederholtem Ausf\"uhren des Codes konnte dieses Problem jedoch behoben wer
 \caption{Ergebnis-CSV-Datei mit identischen MLU-Werten in jeder Zeile}
 \label{fig:repl_p2_daniel1}
 \end{figure}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Zusammenfassung
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Zusammenfassung}
 Es kann gesagt werden, dass wir w\"ahrend des Fachprojekts vieles lernen konnten, 
 insbesondere Dinge, die nicht notwendigerweise im Stundenplan stehen, 
@@ -392,6 +493,10 @@ Allerdings war es auch eine sch\"one Erfahrung in einer Gruppe an so einem Proje
 und die Probleme intern sowie mit den anderen Gruppen besprechen zu k\"onnen.
 Das hat nicht nur zu einem gr\"o\ss eren Zusammengeh\"origkeitsgef\"uhl gef\"uhrt,
 sondern wir haben auch gelernt, kollaborativ gemeinsame Schwierigkeiten zu l\"osen. 
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Ausblick
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Ausblick}
 Aufgrund der relativ kurzen Bearbeitungszeit und den begrenzten Rechenkapazit\"aten unserer eigenen Computer war es etwas schwer, unsere Algorithmen, insbesondere in Projekt 2, auf gro\ss en Topologien zu testen.
 Dies kann dazu f\"uhren, dass bestimmt Effekte wie Datenstaus, welche gerade in gro\ss en Topologien auftauchen, in kleinen kaum oder gar nicht vorkommen.
@@ -400,9 +505,15 @@ Dies kann dazu f\"uhren, dass bestimmt Effekte wie Datenstaus, welche gerade in 
 Vielen Dank an Marvin f\"ur seine Hilfe und Geduld mit unseren Problemen. Ohne seine Hilfe w\"are das alles in der kurzen Zeit sehr viel schwieriger gewesen.
 \end{acks}
 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Literatur
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{fapro_bib}
 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Appendix
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \appendix
 \section{Onlineressourcen}
 \label{sec:resouces}
