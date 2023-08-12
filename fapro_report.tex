@@ -92,19 +92,36 @@ In der heutigen Zeit werden mehrere Millionen Datenpakete von und zu Knotenpunkt
 Daher ist das \emph{Routing} von diesen Datenpaketen in der heutigen Zeit wichtiger denn je.
 Gutes Routing kann Datenstaus verringern oder sogar verhindern, Verteilerknoten auslasten oder entlasten 
 und sorgt damit fuer einen reibungslosen Datenverkehr ueberall auf der Welt.
-Wie gut das Routing innerhalb einer Netzwerktopologie ist, wird durch den darunterliegenden Routingalgorithmus bestimmt.
+Wie gut das Routing innerhalb einer Netzwerktopologie ist, 
+wird durch den darunterliegenden Routingalgorithmus bestimmt.
 Hierf\"ur gibt es verschiedenste Ans\"atze mit variierender Komplexit\"at und Erfolgswahrscheinlichkeit.
 
-Deswegen haben wir uns im Rahmen des Fachprojekts "Routingalgorithmen" n\"aher mit den verschiedenen Algorithmen auseinandergesetzt und haben eigene Variationen dieser Algorithmen erstellt um ein tieferes Verst\"andnis der Materie zu erlangen.
+Im Rahmen des Fachprojekts "Routingalgorithmen" haben wir uns n\"aher mit den verschiedenen Algorithmen besch\"aftigt 
+und haben eigene Variationen dieser Algorithmen erstellt,
+um ein tieferes Verst\"andnis der Materie zu erlangen.
+Zielfunktion war hierbei die Maximum Link Utilization (MLU) nach \cite{foerster2021}.
 In diesem Report fassen wir die Ergebnisse unserer Arbeit zusammen.
-Dies umfasst eine Beschreibung unserer algorithmischen Ideen, sowie Experimente zu diesen im Stil des paper \cite{foerster2021} und eine Einordnung der Resultate dieser Experimente.
-Au\ss erdem gehen wir auf die Arbeit einer anderen Gruppe im Fachprojekt ein, die wir versucht haben zu replizieren.
+Dies umfasst eine Beschreibung unserer drei algorithmischen Ideen (Sequential combination aus inverse capacity und demand
+first waypoints, centrality Metriken mit inverse capacity und \textcolor{red}{Naveeds Algorithmus})
+und Experimente zu Algorithmen im Stil des Papers\cite{foerster2021}.
+Danach werden die Resultate dieser Experimente eingeordnet und erkl\"art.
+Anschließend wird auf die Arbeit einer anderen Gruppe im Fachprojekt eingegangen, dessen Arbeit wir im Rahmen dieses Fachprojekts repliziert haben.
+
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Theorie
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Theoretische Grundlagen}
 \textcolor{red}{Hier wird etwas zum Paper stehen}\cite{foerster2021}.
+Die Grundlage zu dieser Arbeit bildet das Paper "Traffic Engineering with Joint Link Weight and Segment Optimization"\cite{foerster2021}.
+In der Artbeit wurde alternativen Routing-Algorithmen gesucht, 
+welche eine optimale \emph{minimal link utilization} (MLU) auf diversen Topologien liefert. 
+Zwei Algorithem und insbesondere deren Verknuepfung haben sich als vorteilhaft erwiesen.
+Die beiden Algortihmen sind die Link-Weight- und Waypoint-Optimisierung.
+Die Link-Weight-Optimisierung macht ...\newline
+Die Waypoint-Optimisierung hingegen bietet ...\newline
+Die Kombination aus beiden fuehrt zu ...\newline
+Im Vergleich von vielen Routing-Algorithmen auf verschiedensten Topologien schnitt die JOINT ..... ab, siehe Abbildung ...    .
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Umsetzung
@@ -292,7 +309,7 @@ sogenannten Waypoints, zu leiten, um die Verkehrslast auszugleichen und Stau zu 
 Auf der anderen Seite zielt der UW-Algorithmus darauf ab, den Verkehr gleichm\"a\ss ig \"uber das gesamte Netzwerk zu verteilen.\newline
 Das Ziel bestand darin herauszufinden, 
 welche Kombination dieser Algorithmen in Bezug auf die Maximale Link-Auslastung(MLU) die besseren Ergebnisse f\"ur den Datenverkehr im Netwerk liefert.\newline
-Die Tests\footnote{https://github.com/fruitiestPunch/FaPro\_P1} f\"ur beide Algorithmen wurden erfolgreich durchgef\"uhrt, Allerdings gab es Schwierigkeiten beim Plotten der Ergebnisse aufgrund zahlreicher Fehlermeldungen, 
+Die Tests\footnote{\url{https://github.com/fruitiestPunch/FaPro\_P1}} f\"ur beide Algorithmen wurden erfolgreich durchgef\"uhrt, Allerdings gab es Schwierigkeiten beim Plotten der Ergebnisse aufgrund zahlreicher Fehlermeldungen, 
 und aufgrund mangelder Erfahrung mit Python fiel es schwer, diese Fehler zu beheben.\newline
 Dennoch wurden einige Ergebnisse wie die Prozesszeit und Ausf\"uhrungszeit beider Algorithmen manuell zusammengefasst, 
 wie in Abbildung \ref{fig:naveed_p1} dargetellt. 
@@ -357,7 +374,7 @@ sodass er im \emph{worst-case} dennoch nicht ganz schlecht ausgeht.
 \end{figure}
 % Das [h] kann weg, dann findet Tabelle automatisch den besten Platz
 \begin{table}
-\caption{Vereinfachte Anforderungstabelle. Vollst\"andige Tabelle unter \url{https://github.com/fruitiestPunch/FaPro_P2/tree/master/pouria}}
+\caption{Vereinfachte Anforderungstabelle. Vollst\"andige Tabelle unter \url{https://github.com/fruitiestPunch/FaPro_P2/tree/master/pouria/network_origin.pdf}}
 \label{tab:pouriaSimpleTopology}
 \begin{tabular}{cccc}
 \toprule
@@ -433,7 +450,7 @@ Im Folgenden werden die Ergebnisse und Einsichten der Replikationen von Gruppe 2
 % Projekt 1
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Replikation zu Projekt 1}
-Die Replikation von diesem Projekt war zu Beginn leider etwas schwierig, weil in beiden F\"allen Abh\"angigkeiten fehlten.
+Die Replikation von diesem Projekt\footnote{\url{https://github.com/kohlbold/FpRouting}} war zu Beginn leider etwas schwierig, weil in beiden F\"allen Abh\"angigkeiten fehlten.
 Ein gro\ss es Problem beim Replizieren des Deep-Learning-Projekts war, dass sich der Prozess nach einer Weile selbstst\"andig beendet hat.
 Die Vermutung liegt nahe, dass der Rechenaufwand so hoch war, dass der Rechner ab einem bestimmten Zeitpunkt den Prozess selbst beendet hat.
 Ein weiteres Problem beim Replizieren waren die Fehlermeldungen und Abbr\"uche beim Plotten. 
@@ -450,7 +467,7 @@ welcher sich hartn\"ackig auch nach einigen Anpassungsversuchen weiterhin erhalt
 % Replikation
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Replikation zu Projekt 2}
-Die Replikation des Codes aus Gruppe 2 lief im Allgemeinen problemlos, wie die Abbildungen \ref{fig:repl_p2_daniel2} und \ref{fig:repl_p2_zixiang_10} zeigen.
+Die Replikation des Codes\footnote{\url{https://github.com/kohlbold/FPRouting2}} aus Gruppe 2 lief im Allgemeinen problemlos, wie die Abbildungen \ref{fig:repl_p2_daniel2} und \ref{fig:repl_p2_zixiang_10} zeigen.
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{figures/repl_p2_daniel2.png}
@@ -558,5 +575,5 @@ Die Tatsache, dass die Boxplots hier nur als Striche dargestellt werden, weist d
 was auf das fr\"uhzeitige Abbrechen einiger Rechenprozesse zur\"uckgef\"uhrt werden kann.
 % bug in the acmart document class
 % added balance on last page to circumvent it
-\balance
+%\nobalance
 \end{document}
