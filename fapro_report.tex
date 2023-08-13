@@ -54,7 +54,7 @@
 \begin{abstract}
 In diesem Report werden die Ergebnisse unserer Arbeit im Rahmen des Fachprojekts "Routingalgorithmen" zusammengefasst.
 Wir haben die Algorithmen auf die Maximum Link Utilization (MLU) nach \cite{foerster2021} untersucht.
-\textcolor{red}{Beschreibung der Ergebnisse von Pourias Algorithmus}
+In einem der drei F\"alle wurde die sequentielle Kombination aus dem $inverse\_capacity$-Algorithmus und dem $demand\_first\_waypoints$-Algorithmus untersucht.
 Der Algorithmus, der inverse capacity mit centrality Metriken verrechnet, ist meistens schlechter als inverse capacity, 
 da reines inverse capacity \"ofter zwei k\"urzste Wege finden um demands gleichm\"a\ss iger zu verteilen damit einzelne Links nicht \"uberlastet werden.
 Es wird jedoch auch gezeigt, dass Topologien gefunden werden k\"onnen, bei den pures inverse capacity eine schlechtere MLU hat.
@@ -99,7 +99,7 @@ Hierf\"ur gibt es verschiedenste Ans\"atze mit variierender Komplexit\"at und Er
 Im Rahmen des Fachprojekts "Routingalgorithmen" haben wir uns n\"aher mit den verschiedenen Algorithmen besch\"aftigt 
 und haben eigene Variationen dieser Algorithmen erstellt,
 um ein tieferes Verst\"andnis der Materie zu erlangen.
-Zielfunktion war hierbei die Maximum Link Utilization (MLU) nach \cite{foerster2021}.
+Zielfunktion war hierbei die \emph{Maximum Link Utilization} (MLU) nach \cite{foerster2021}.
 In diesem Report fassen wir die Ergebnisse unserer Arbeit zusammen.
 Dies umfasst eine Beschreibung unserer drei algorithmischen Ideen (Sequential combination aus inverse capacity und demand
 first waypoints, centrality Metriken mit inverse capacity und \textcolor{red}{Naveeds Algorithmus})
@@ -112,17 +112,47 @@ Anschließend wird auf die Arbeit einer anderen Gruppe im Fachprojekt eingegange
 % Theorie
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Theoretische Grundlagen}
-\textcolor{red}{Hier wird etwas zum Paper stehen}\cite{foerster2021}.
 Die Grundlage zu dieser Arbeit bildet das Paper "Traffic Engineering with Joint Link Weight and Segment Optimization"\cite{foerster2021}.
-In der Artbeit wurde alternativen Routing-Algorithmen gesucht, 
-welche eine optimale \emph{minimal link utilization} (MLU) auf diversen Topologien liefert. 
-Zwei Algorithem und insbesondere deren Verknuepfung haben sich als vorteilhaft erwiesen.
-Die beiden Algortihmen sind die Link-Weight- und Waypoint-Optimisierung.
-Die Link-Weight-Optimisierung macht ...\newline
-Die Waypoint-Optimisierung hingegen bietet ...\newline
-Die Kombination aus beiden fuehrt zu ...\newline
-Im Vergleich von vielen Routing-Algorithmen auf verschiedensten Topologien schnitt die JOINT ..... ab, siehe Abbildung ...    .
-
+In der Artbeit wurdeb alternativen Routing-Algorithmen gesucht, 
+welche eine optimale \emph{minimal link utilization} (MLU) auf diversen Topologien -- synthetische sowie reale -- liefern. 
+Zwei Algorithem und insbesondere deren Verkn\"upfung haben sich als vorteilhaft erwiesen.
+\subsubsection{Link-Weight-Optimization} 
+Im Allgemeinen werden f\"ur den Datenpakettransfer k\"urzeste Pfade ermittelt.
+Hierf\"ur werden die Kanten, die die Knoten innerhalb einer Topologie verbinden, 
+mit Gewichten versehen, 
+die als Quantifizierung f\"ur die Distanz oder Attraktivit\"at der jeweiligen Kanten verwendet werden.
+Bei der \emph{Link-Weight-Optimisierung} (LWO) geht es darum, 
+die Gewichte der Kanten so zu optimieren, 
+dass w\"ahrend des Datenflusses Datenstaus vermieden oder vorteilhaft aufgeteilt werden. 
+Um das zu erreichen, 
+muss die gesamte Topologie betrachtet und desses Gewichte nochmal berechnet werden.
+Da das Berechnen optimaler Kanten-gewichte ein NP-hartes Problem ist,
+werden in der Regel heuristische Methoden zur Berechnung der Kanten verwendet.
+Eine bekannte und weitl\"aufig genutzte ist die $inverse\_capacity$-Methode.
+\subsubsection{Waypoint-Optimization}
+Wie in dem dieser Arbeits zur grundeliegenden Paper\cite{foerster2021} beschrieben,
+reicht es in der Regel nicht aus, einfach nur die Kantengewichte einzustellen, um den anfallenden Datenstau zu verhindern.
+Hierf\"ur bietet sich das Setzen von Wegpunkten (englisch: \emph{waypoints}) an, 
+da hier der gesamte Datenfluss innerhalb der Topologie ganzheitlich betrachtet wird 
+und die Wegpunkte f\"r die jeweiligen Datenfl\"usse so gesetzt werden, 
+dass mehrere dieser Fl\"usse nicht entlang derselben Pfade innerhalb der Topologie gef\"uhrt werden, 
+wenn die Wegpunkte nicht die n\"tigen Kapazit\"aten haben, um die Daten aller einflie\ss enden Str\"ome ohne Datenstau aufzunehmen und weiterzuleiten.
+\subsubsection{Joint Weights and Waypoint Optimization}
+Die Kombination aus beiden vorherigen Ans\"atzen ist daraus gewachsen, 
+die Schw\"a-chen der einzelnen Methodiken zu auszugleichen.
+Dabei eignet sich die LWO im Allgemeinen schlecht, 
+um die Kantengewichte der einzelenen Datenfl\"usse getrennt von allen anderen Datenfl\"ussen zu optimieren.
+Sobald die Kantengewichte gesetzt wurden, gelten diese f\"ur alle Kanten und f\"ur alle Datenpakete, 
+die von einer Quelle zu einem anderen Ziel unterwegs sind.
+Dies kann zur Folge haben, dass Gewichte, die f\"ur eine Anforderung gut geeignet sind, weniger optimal f\"ur eine oder mehrere andere Anforderungen sind.
+Auf der anderen Seite h\"angt die Effektivit\"at von Wegpunkten (WPO), 
+f\"ur sich alleine betrachetet, stark von den zuvor gesetzten Kantengewichten ab.
+Daher k\"onnen schlechte beziehungsweise suboptimale Kantengewichte innerhalb einer Topologie zu suboptimalen Wegpunkten f\"ur die Anforderungen der Datenpakete f\"uhren.
+Im Rahmen dieses Papers schnitt die Joint-Methode im Vergleich auf verschiedensten Topologien besonders gut ab, 
+wie in \cite{foerster2021} gesehen werden kann.
+Diese Erkenntnis f\"uhrte zu der Frage, 
+wie sich andere Algorithmen oder Methodiken in Verbindung auswirken. 
+Mit der Beantwortung dieser Frage befassen sich die folgenden Abschnitte.
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Umsetzung
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
