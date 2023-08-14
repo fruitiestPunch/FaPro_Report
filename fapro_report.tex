@@ -53,13 +53,14 @@
 
 \begin{abstract}
 In diesem Report werden die Ergebnisse unserer Arbeit im Rahmen des Fachprojekts "Routingalgorithmen" zusammengefasst.
-Wir haben die Algorithmen auf die Maximum Link Utilization (MLU) nach \cite{foerster2021} untersucht.
+Wir haben die Algorithmen auf die \emph{Maximum Link Utilization} (MLU) nach \cite{foerster2021} untersucht.
 In einem der drei F\"alle wurde die sequentielle Kombination aus dem $inverse\_capacity$-Algorithmus und dem $demand\_first\_waypoints$-Algorithmus untersucht.
-Der Algorithmus, der inverse capacity mit centrality Metriken verrechnet, ist meistens schlechter als inverse capacity, 
-da reines inverse capacity \"ofter zwei k\"urzste Wege finden um demands gleichm\"a\ss iger zu verteilen damit einzelne Links nicht \"uberlastet werden.
-Es wird jedoch auch gezeigt, dass Topologien gefunden werden k\"onnen, bei den pures inverse capacity eine schlechtere MLU hat.
-\textcolor{red}{Beschreibung der Ergebnisse von Naveeds Algorithmus}
-Die Replikation andere Gruppen im ersten Projektteil nicht erfolgreich, und im zweiten schon, 
+Der Algorithmus, der \emph{inverse capacity} mit centrality Metriken verrechnet, ist meistens schlechter als \emph{inverse capacity}, 
+da reines \emph{inverse capacity} \"ofter zwei k\"urzeste Wege findt um demands gleichm\"a\ss iger zu verteilen und damit einzelne Links nicht \"uberlastet werden.
+Es wird jedoch auch gezeigt, dass Topologien gefunden werden k\"onnen, bei den pures \emph{inverse capacity} eine schlechtere MLU hat.
+Ein weiterer Algorithmus befasst sich mit der sequenziellen Kombination von Open Shortest Path First (OSPF) mit zwei verschiedenen Algorithmen: 
+Demand First Waypoint (DFW) und Uniform Weights (UW).
+Die Replikation einer anderen Gruppe im ersten Projektteil nicht erfolgreich, und im zweiten schon, 
 jedoch haben wir daraus die Lehre gezogen wie wir unsere Arbeit besser replizierbar machen und das fr\"uhe Kommunikation mit den anderen Gruppen wichtig ist.
 \end{abstract}
 
@@ -91,7 +92,7 @@ jedoch haben wir daraus die Lehre gezogen wie wir unsere Arbeit besser replizier
 In der heutigen Zeit werden mehrere Millionen Datenpakete von und zu Knotenpunkten verschickt.
 Daher ist das \emph{Routing} von diesen Datenpaketen in der heutigen Zeit wichtiger denn je.
 Gutes Routing kann Datenstaus verringern oder sogar verhindern, Verteilerknoten auslasten oder entlasten 
-und sorgt damit fuer einen reibungslosen Datenverkehr ueberall auf der Welt.
+und sorgt damit f\"ur einen reibungslosen Datenverkehr \"uberall auf der Welt.
 Wie gut das Routing innerhalb einer Netzwerktopologie ist, 
 wird durch den darunterliegenden Routingalgorithmus bestimmt.
 Hierf\"ur gibt es verschiedenste Ans\"atze mit variierender Komplexit\"at und Erfolgswahrscheinlichkeit.
@@ -101,11 +102,11 @@ und haben eigene Variationen dieser Algorithmen erstellt,
 um ein tieferes Verst\"andnis der Materie zu erlangen.
 Zielfunktion war hierbei die \emph{Maximum Link Utilization} (MLU) nach \cite{foerster2021}.
 In diesem Report fassen wir die Ergebnisse unserer Arbeit zusammen.
-Dies umfasst eine Beschreibung unserer drei algorithmischen Ideen (Sequential combination aus inverse capacity und demand
-first waypoints, centrality Metriken mit inverse capacity und \textcolor{red}{Naveeds Algorithmus})
+Dies umfasst eine Beschreibung unserer drei algorithmischen Ideen (Sequential combination aus \emph{inverse capacity} und demand
+first waypoints, centrality Metriken mit \emph{inverse capacity} und Sequential combination aus \emph{inverse capacity} und \emph{demand first waypoints})
 und Experimente zu Algorithmen im Stil des Papers\cite{foerster2021}.
 Danach werden die Resultate dieser Experimente eingeordnet und erkl\"art.
-Anschließend wird auf die Arbeit einer anderen Gruppe im Fachprojekt eingegangen, dessen Arbeit wir im Rahmen dieses Fachprojekts repliziert haben.
+Anschließend wird auf die Arbeit einer anderen Gruppe im Fachprojekt eingegangen, deren Arbeit wir im Rahmen dieses Fachprojekts repliziert haben.
 
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -153,6 +154,7 @@ wie in \cite{foerster2021} gesehen werden kann.
 Diese Erkenntnis f\"uhrte zu der Frage, 
 wie sich andere Algorithmen oder Methodiken in Verbindung auswirken. 
 Mit der Beantwortung dieser Frage befassen sich die folgenden Abschnitte.
+
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Umsetzung
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -163,17 +165,17 @@ Die beiden Projekte sind in Unterabschnitte und die algorithmischen Ideen und Um
 % Projekt 1
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Algorithmen zu Projekt 1}
-In Projekt 1 ging es darum, eine algorithmische Idee auf Basis von \cite{foerster2021} herauszuarbeiten und diese mithilfe desselben Git-Prokjekts\footnote{\url{https://github.com/fruitiestPunch/FaPro_P1}, siehe Abschnitt \ref{sec:resouces}} mit alternativen Routingalgorithmen zu vergleichen. 
+In Projekt 1 ging es darum, eine algorithmische Idee auf Basis von \cite{foerster2021} herauszuarbeiten und diese mithilfe desselben Git-Projekts\footnote{\url{https://github.com/fruitiestPunch/FaPro_P1}, siehe Abschnitt \ref{sec:resouces}} mit alternativen Routingalgorithmen zu vergleichen. 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Pouria
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Sequential combination aus inverse capacity und demand first waypoints}
 Der Kerngedanke hier war es, einen einen schnellen Algorithmus zu finden, 
 welcher hinreichend gute Ergebnisse in Bezug auf die MLU abliefert.
-Diese Eigenschaft ist insbesondere f\"ur Netzwerke sinvoll,
-dessen Auslastungen sich regelm\"a\ss ig w\"ahrend des Betriebs \"andern und der ALgorithmus reaktiv sehr schnell alle Gewichte und Wegpunkte neu berechnet.\newline
-Die Grundlage dieses Algorithmus war die sequentielle Kombination von dem empirisch h\"aufig verwendetem $inverse\_capacity$ und dem etwas langsameren aber genaueren $demand\_first\_waypoints$.
-\emph{Anmerkung: Die Algorithemn Namen "demand first waypoints" und "greedy waypoints" sind hier austauschbar.}\newline
+Diese Eigenschaft ist insbesondere f\"ur Netzwerke sinnvoll,
+dessen Auslastungen sich regelm\"a\ss ig w\"ahrend des Betriebs \"andern und der Algorithmus reaktiv sehr schnell alle Gewichte und Wegpunkte neu berechnet.\newline
+Die Grundlage dieses Algorithmus war die sequentielle Kombination von dem empirisch h\"aufig verwendetem \emph{inverse capacity} und dem etwas langsameren aber genaueren \emph{demand first waypoints}.
+\emph{Anmerkung: Die Algorithemn Namen "\emph{demand first waypoints}" und "\emph{greedy waypoints}" sind hier austauschbar.}\newline
 Daraufhin bildeten sich zwei Fragen.
 \begin{enumerate}
     \item Ist die Kombination genauer als dessen Bestandsteile?
@@ -183,28 +185,28 @@ Daraufhin bildeten sich zwei Fragen.
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{figures/pouria_all_algorithms_abilene.pdf}
-\caption{Vergleich von vier Algorithmen mit syntetischen Anforderungen auf der Abilene-Topologie. Legende: greedy waypoints in blau, inverse capacity in gelb, SeqComWayCap in gr\"un, SeqComCapWay in rot.}
+\caption{Vergleich von vier Algorithmen mit synthetischen Anforderungen auf der Abilene-Topologie. Legende: \emph{greedy waypoints} in blau, \emph{inverse capacity} in gelb, SeqComWayCap in gr\"un, SeqComCapWay in rot.}
 \label{fig:pouriaBoxplotSynthetic}
 \end{figure}
 % Das [h] kann weg, dann findet Tabelle automatisch den besten Platz
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{figures/pouria_colored_scatter_plot_results_all_algorithms.pdf}
-\caption{Vergleich von vier Algorithmen mit syntetischen Anforderungen auf der Abilene-Topologie. Legende: greedy waypoints in blau, inverse capacity in gelb, SeqComWayCap in gr\"un, SeqComCapWay in rot.}
+\caption{Vergleich von vier Algorithmen mit syntetischen Anforderungen auf der Abilene-Topologie. Legende: \emph{greedy waypoints} in blau, \emph{inverse capacity} in gelb, SeqComWayCap in gr\"un, SeqComCapWay in rot.}
 \label{fig:pouriaScatterSynthetic}
 \end{figure}
 % Das [h] kann weg, dann findet Tabelle automatisch den besten Platz
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{figures/pouria_real_demands.pdf}
-\caption{Vergleich von vier Algorithmen mit realen Anforderungen auf der Abilene-Topologie. Legende: greedy waypoints in blau, inverse capacity in gelb, SeqComWayCap in gr\"un, SeqComCapWay in rot.}
+\caption{Vergleich von vier Algorithmen mit realen Anforderungen auf der Abilene-Topologie. Legende: \emph{greedy waypoints} in blau, \emph{inverse capacity} in gelb, SeqComWayCap in gr\"un, SeqComCapWay in rot.}
 \label{fig:pouriaBoxplotReal}
 \end{figure}
 % Das [h] kann weg, dann findet Tabelle automatisch den besten Platz
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{figures/pouria_colored_scatter_plot_results_real_demands.pdf}
-\caption{Vergleich von vier Algorithmen mit syntetischen Anforderungen auf der Abilene-Topologie. Legende: greedy waypoints in blau, inverse capacity in gelb, SeqComWayCap in gr\"un, SeqComCapWay in rot.}
+\caption{Vergleich von vier Algorithmen mit syntetischen Anforderungen auf der Abilene-Topologie. Legende: \emph{greedy waypoints} in blau, \emph{inverse capacity} in gelb, SeqComWayCap in gr\"un, SeqComCapWay in rot.}
 \label{fig:pouriaScatterReal}
 \end{figure}
 Die Abbildungen \ref{fig:pouriaBoxplotSynthetic} und \ref{fig:pouriaBoxplotReal} geben eine Antwort auf Frage 1.\newline
@@ -212,30 +214,30 @@ Sie zeigen,
 dass die sequentielle Kombination beider Algorithmen in beiden F\"allen mindestens genauso gut ist wie eines seiner Bestandteile. 
 Im Fall von $SeqComCapWay$ ist dieser im Durchschnitt sogar besser als beide Algorithmen.
 Dies l\"asst sich darauf zur\"uckf\"uhren, 
-dass die Kantengewichte durch den $inverse\_capacity$-\newline
+dass die Kantengewichte durch den \emph{inverse capacity}-\newline
 Algorithmus zu Beginn verbessert werden 
 und anschlie\ss end durch den zweiten Algorithmus weiter verbessert werden, falls m\"oglich.
 Im Folgenden wird daher nur noch auf die sequentielle Kombination \emph{SeqComCapWay} (in rot) eingegangen.\newline
 Die Abbildungen \ref{fig:pouriaScatterSynthetic} und \ref{fig:pouriaScatterReal} hingegen sind relevant f\"ur die Frage 2. 
 Diese zeigen einen etwas genaueren Blick auf die Rechenergebnisse geplottet \"uber die daf\"ur ben\"otigte Zeit.
-Hier kann auch direkt gesehen werden, dass $inverse\_capacity$ mit Abstand der schnellste hier verwendete Algorigthmus ist.
+Hier kann auch direkt gesehen werden, dass \emph{inverse capacity} mit Abstand der schnellste hier verwendete Algorithmus ist.
 Dies ist besonders vorteilhaft, da es bedeutet, 
-dass die sequentielle Kombination aus $inverse\_capacity$ und $greedy\_waypoints$ kaum mehr Berechnungszeit ben\"otigt als $greedy\_waypoints$ alleine.
+dass die sequentielle Kombination aus \emph{inverse capacity} und \emph{greedy waypoints} kaum mehr Berechnungszeit ben\"otigt als \emph{greedy waypoints} alleine.
 Somit konnte empirisch gezeigt werden, 
 dass in diesem "vereinfachten" Beispiel die Kombination der oben genannten Algorithmen nicht nur im Durchschnitt bessere MLU-Ergebnisse liefert, 
 sondern das auch in derselben Zeit erledigt.
 Und somit l\"asst sich die Frage der Rechtfertigung auslagern.
-In allen F\"allen, in denen der $greedy\_waypoints$-Algorithmus gerechtfertigt ist,
+In allen F\"allen, in denen der \emph{greedy waypoints}-Algorithmus gerechtfertigt ist,
 ist auch die oben genannte Kombination gerechtfertigt.\newline
 Da es aus Zeitgr\"unden sowie mangelnder Rechenressourcen nicht so einfach m\"oglich war,
 diese Algorithmen auf sehr gro\ss en Tologien zu testen,
 kann nicht mit Sicherheit gesagt, wie hoch die Berechnungszeit in Topologien mit 50 oder mehr Knoten wirklich ist.
-Daher ist es schwer, diese Algorithmen (mit Ausnahme von $inverse\_capacity$ in solchen Topologien dynamisch zu verwenden.
+Daher ist es schwer, diese Algorithmen (mit Ausnahme von \emph{inverse capacity} in solchen Topologien dynamisch zu verwenden.
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Kai
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Centrality-Metriken mit inverse capacity}
-Der Gedanken hier war, den Algorithmus inverse capacity, der statisch auf der Topologie (also unabh\"angig von den demands) berechnet wird, mit Zentralit\"atswerten zu erweitern.
+\subsubsection{Centrality-Metriken mit \emph{inverse capacity}}
+Der Gedanken hier war, den Algorithmus \emph{inverse capacity}, der statisch auf der Topologie (also unabh\"angig von den demands) berechnet wird, mit Zentralit\"atswerten zu erweitern.
 
 Ich habe mich f\"ur die Zentralit\"atswerte closeness-, eigenvector- und betweeness-Zentralit\"at entscheiden.
 Im Folgenden werden nun die Zentralit\"atsmetriken definiert (Definitionen aus \cite{guide}), und dann erl\"autet warum diese ausgew\"ahlt wurden:
@@ -291,12 +293,12 @@ Die eigenvector-centrality wurde gew\"ahlt, da eine hohe eigenvector-centrality 
 
 In der tats\"achlichen Implementierung wurden die centrality Berechnungen von NetworkKit benutzt, und dort zus\"atzlich noch normalisiert.
 
-Um inverse capacity mit den centrality Werten zu verrechnen wird folgende Formel genutzt (f\"ur die Kante von i nach j:
+Um \emph{inverse capacity} mit den centrality Werten zu verrechnen wird folgende Formel genutzt (f\"ur die Kante von i nach j:
 \begin{align*}
 &new\_weight_{ij} =\\
-&inverse\_capacity\_weight * \frac{CentralityNode_i + CentralityNode_j}{2}
+&inverse capacity\_weight * \frac{CentralityNode_i + CentralityNode_j}{2}
 \end{align*}
-In \ref{fig:kai_p1_results} gibt es neben dem \$centralityInverseCapacity auch noch den \$centralityCapacity, dass ist der Algorithmus ohne InverseCapacity, also:
+In \ref{fig:kai_p1_results} gibt es neben dem centralityInverseCapacity auch noch den centralityCapacity, dass ist der Algorithmus ohne \emph{inverse capacity}, also:
 \[
 new\_weight_{ij} = weight * \frac{CentralityNode_i + CentralityNode_j}{2}
 \]
@@ -314,10 +316,10 @@ Diese d\"urften schlecht abschneiden, sind hier jedoch mit dabei, um den Untersc
 
 Wie man in Abbildung \ref{fig:kai_p1_results} zu sehen ist, ist der neue Algorithmus keine Verbesserung auf den getesteten Topologien.
 Am schlechtesten schneidet hier der Algorithmus mit der betweeness centrality ab, dicht gefolgt von der eigenvector centrality.
-Die closeness centrality schneidet mit am besten ab und ist im Beispiel f\"ur "Abilene" gleich auf mit inverse capacity.
-Die Algorithmen ohne inverse capacity sind, schlechter, jedoch (abgesehen von Abilene) nah an den anderen Algorithmen dran.
+Die closeness centrality schneidet mit am besten ab und ist im Beispiel f\"ur "Abilene" gleich auf mit \emph{inverse capacity}.
+Die Algorithmen ohne \emph{inverse capacity} sind, schlechter, jedoch (abgesehen von Abilene) nah an den anderen Algorithmen dran.
 
-Die schlechtere Performance kann dadurch erkl\"art werden, dass die weights der Kanten bei reinem Inverse Capacity, zwei k\"urzeste Wege zwischen zwei Knoten entstehen lassen, und diese durch die centralities dann, durch die neue Gewichtung, nur noch einen k\"urzesten Weg haben.
+Die schlechtere Performance kann dadurch erkl\"art werden, dass die weights der Kanten bei reinem \emph{inverse capacity}, zwei k\"urzeste Wege zwischen zwei Knoten entstehen lassen, und diese durch die centralities dann, durch die neue Gewichtung, nur noch einen k\"urzesten Weg haben.
 Dadurch werden dann einzelne Links \"uberlastet und die MLU wird schlechter.
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Naveed
@@ -331,14 +333,14 @@ Dadurch werden dann einzelne Links \"uberlastet und die MLU wird schlechter.
 \end{figure}
 Der zentrale Gedanke dieses  Algorithmus bestand darin, 
 im Rahmen des ersten Projekts die urspr\"ungliche Kombination aus OSPF und Demand First Waypoint(DFW)  zu optimieren, 
-indem der DFW durch den Uniform Weights erstzt wurde. 
+indem der DFW durch den Uniform Weights ersetzt wurde. 
 Beide Algorithmen haben das Ziel, die Netzwerk\"uberlastung zu minimieren, indem sie die Linkgewichte anpassen. 
-Jedoch unterscheiden in ihrer Herangehensweise an das Traffic Engineering.\newline
+Jedoch unterscheiden sie sich in ihrer Herangehensweise an das Traffic Engineering.\newline
 Der DFW-Algorithmus fokussiert sich darauf, den Verkehr zu spezifischen Zwischenpunkten im Netzwerk, 
 sogenannten Waypoints, zu leiten, um die Verkehrslast auszugleichen und Stau zu vermeiden. 
 Auf der anderen Seite zielt der UW-Algorithmus darauf ab, den Verkehr gleichm\"a\ss ig \"uber das gesamte Netzwerk zu verteilen.\newline
 Das Ziel bestand darin herauszufinden, 
-welche Kombination dieser Algorithmen in Bezug auf die Maximale Link-Auslastung(MLU) die besseren Ergebnisse f\"ur den Datenverkehr im Netwerk liefert.\newline
+welche Kombination dieser Algorithmen in Bezug auf die \emph{Maximum Link Utilization} (MLU) die besseren Ergebnisse f\"ur den Datenverkehr im Netwerk liefert.\newline
 Die Tests\footnote{\url{https://github.com/fruitiestPunch/FaPro\_P1}} f\"ur beide Algorithmen wurden erfolgreich durchgef\"uhrt, Allerdings gab es Schwierigkeiten beim Plotten der Ergebnisse aufgrund zahlreicher Fehlermeldungen, 
 und aufgrund mangelder Erfahrung mit Python fiel es schwer, diese Fehler zu beheben.\newline
 Dennoch wurden einige Ergebnisse wie die Prozesszeit und Ausf\"uhrungszeit beider Algorithmen manuell zusammengefasst, 
@@ -370,16 +372,16 @@ Dieses Projekt wurde ebenfalls mithilfe eines bereits existierenden Repositories
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Pouria
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Sequential combination aus inverse capacity und demand first waypoints}
+\subsubsection{Sequential combination aus \emph{inverse capacity} und \emph{demand first waypoints}}
 \label{sec:seq_com_p2}
 Zum Testen dieses Algorithmus wurde eine vereinfachte Topologie mit wenigen Anforderungen erstellt.
 In Abbildung \ref{fig:pouriaSimpleTopology} ist die finale Topologie zu sehen, 
-wobei hier bereits der $inverse\_capacity$-Algorithmus darauf ausgef\"uhrt wurde.
+wobei hier bereits der \emph{inverse capacity}-Algorithmus darauf ausgef\"uhrt wurde.
 In der Tabelle \ref{tab:pouriaSimpleTopology} sind die beiden Anforderungen sowie deren Start- und Endknoten angegeben.
 In diesem Projekt kam es zu einigen Problemen, die durch die Rechenst\"arke der genutzten Hardware verschuldet wurden.
 Abschnitt \ref{sec:alt_boxplot} befasst sich st\"arker mit diesem Punkt und dessen Auswirkungen.
 Abbildung \ref{fig:pouria_boxplot_no_boxes} zeigt dabei die MLU-Werte von zwei Algorithmen im Vergleich.
-Hierf\"ur wurden der Weights-Algorithmus und der sequentielle Kombinations aus $inverse\_capacity$ und $demand\_first\_waypoints$ miteinander verglichen.\newline
+Hierf\"ur wurden der Weights-Algorithmus und der sequentielle Kombinations aus \emph{inverse capacity} und \emph{demand first waypoints} miteinander verglichen.\newline
 Anhand der Form der Boxplots ist zu erkennen, dass es keine bis minimale Streuung in den finalen Ergebnissen gab.
 Im Allgemeinen schneiden beide Algorithmen gleich gut ab, denn bei in beiden F\"allen liegt die durchschnittliche MLU bei unter 2.
 Allerdings ist in Abbildung \ref{fig:pouria_boxplot_no_boxes} auch zu erkennen, dass beide Ausrei\ss er enthalten,
@@ -419,22 +421,22 @@ $\vdots$ & & & \\
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Kai
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Centrality-Metriken mit inverse capacity}
+\subsubsection{Centrality-Metriken mit \emph{inverse capacity}}
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{figures/kai_p2_baseTopo.png}
-\caption{Topologie f\"ur die Tests des Algorithmus centrality Metriken mit inverse capacity}
+\caption{Topologie f\"ur die Tests des Algorithmus centrality Metriken mit \emph{inverse capacity}}
 \label{fig:kai_p2_baseTopo}
 \end{figure}
-Die Topologie f\"ur die Tests der centrality Metriken mit inverse capacity ist die in Abbildung \ref{fig:kai_p2_baseTopo}
+Die Topologie f\"ur die Tests der centrality Metriken mit \emph{inverse capacity} ist die in Abbildung \ref{fig:kai_p2_baseTopo}.
 Es gibt zwei Demands, einmal von 0 nach 4 mit Gr\"o\ss e 1, und einmal von 3 nach 4 mit Gr\"o\ss e 8.
 Au\ss erdem wurde hier nur die centrality Metrik closeness benutzt, da diese im ersten Projekt am besten der drei Metriken abgeschlossen hat.
 
 Warum diese Topologie genutzt wurde, wird klar wenn man sich die Ergebnisse anschaut.
-Wie man in Abbildung \ref{fig:kai_p2_results} sehen kann, performt auf dieser Topologie der Algorithmus besser als inverse capacity.
+Wie man in Abbildung \ref{fig:kai_p2_results} sehen kann, performt auf dieser Topologie der Algorithmus besser als \emph{inverse capacity}.
 Der Grund daf\"ur wird in Abbildung \ref{fig:kai_p2_AdTopo} verdeutlicht.
-Inverse capacity schickt beide Demands \"uber die Kante zwischen 3 und 4, dadurch wird diese \"uberlastet.
-Inverse capacity mit der closeness Metrik schick ein Demand von 3 nach 4 und den anderen \"uber 0 nach 2 nach 4 und verhindert dadurch die \"uberlastung.
+\emph{inverse capacity} schickt beide Demands \"uber die Kante zwischen 3 und 4, dadurch wird diese \"uberlastet.
+\emph{inverse capacity} mit der closeness Metrik schick ein Demand von 3 nach 4 und den anderen \"uber 0 nach 2 nach 4 und verhindert dadurch die \"uberlastung.
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{figures/kai_p2_TopoAd.png}
@@ -444,14 +446,14 @@ Inverse capacity mit der closeness Metrik schick ein Demand von 3 nach 4 und den
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{figures/kai_p2_results.png}
-\caption{Ergebnisse f\"ur Algorithmus centrality Metriken mit inverse capacity}
+\caption{Ergebnisse f\"ur Algorithmus centrality Metriken mit \emph{inverse capacity}}
 \label{fig:kai_p2_results}
 \end{figure}
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Naveed
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Sequential Combination aus OSPF und Uniform Weights}
-Um den Algorithmus im Nanonet zu testen, wurde eine Topologie1 erstellt, 
+Um den Algorithmus in Nanonet zu testen, wurde eine Topologie1 erstellt, 
 die 5 Knoten umfasst, wie in Abbildung \ref{fig:naveed_p2_graph} dargestellt. 
 Dabei wurden allen Kanten gleichm\"a\ss ige Gewichtungen zugewiesen. 
 Anschlie\ss end wurden Demands von Knoten 0 zu Knoten 4 gesendet. 
