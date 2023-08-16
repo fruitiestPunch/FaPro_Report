@@ -74,7 +74,7 @@ jedoch haben wir daraus die Lehre gezogen wie wir unsere Arbeit besser replizier
 </ccs2012>
 \end{CCSXML}
 
-\ccsdesc[500]{Networks~Traffic engineering algorithms}
+\ccsdesc[500]{Networks~Traffic Engineering Algorithms}
 
 % Eventuell keywords weglassen
 \keywords{weight optimization, waypoint optimization}
@@ -103,7 +103,7 @@ um ein tieferes Verst\"andnis der Materie zu erlangen.
 Zielfunktion war hierbei die \emph{Maximum Link Utilization} (MLU) nach \cite{foerster2021}.
 In diesem Report fassen wir die Ergebnisse unserer Arbeit zusammen.
 Dies umfasst eine Beschreibung unserer drei algorithmischen Ideen (Sequential combination aus \emph{inverse capacity} und demand
-first waypoints, centrality Metriken mit \emph{inverse capacity} und Sequential combination aus \emph{inverse capacity} und \emph{demand first waypoints})
+first waypoints, centrality Metriken mit \emph{inverse capacity} und sequential combination aus \emph{inverse capacity} und \emph{demand first waypoints})
 und Experimente zu Algorithmen im Stil des Papers\cite{foerster2021}.
 Danach werden die Resultate dieser Experimente eingeordnet und erkl\"art.
 Anschließend wird auf die Arbeit einer anderen Gruppe im Fachprojekt eingegangen, deren Arbeit wir im Rahmen dieses Fachprojekts repliziert haben.
@@ -114,7 +114,7 @@ Anschließend wird auf die Arbeit einer anderen Gruppe im Fachprojekt eingegange
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Theoretische Grundlagen}
 Die Grundlage zu dieser Arbeit bildet das Paper "Traffic Engineering with Joint Link Weight and Segment Optimization"\cite{foerster2021}.
-In der Artbeit wurdeb alternativen Routing-Algorithmen gesucht, 
+In der Arbeit wurden alternativen Routing-Algorithmen gesucht, 
 welche eine optimale \emph{minimal link utilization} (MLU) auf diversen Topologien -- synthetische sowie reale -- liefern. 
 Zwei Algorithem und insbesondere deren Verkn\"upfung haben sich als vorteilhaft erwiesen.
 \subsubsection{Link-Weight-Optimization} 
@@ -126,12 +126,12 @@ Bei der \emph{Link-Weight-Optimisierung} (LWO) geht es darum,
 die Gewichte der Kanten so zu optimieren, 
 dass w\"ahrend des Datenflusses Datenstaus vermieden oder vorteilhaft aufgeteilt werden. 
 Um das zu erreichen, 
-muss die gesamte Topologie betrachtet und desses Gewichte nochmal berechnet werden.
+muss die gesamte Topologie betrachtet und deren Gewichte nochmal berechnet werden.
 Da das Berechnen optimaler Kanten-gewichte ein NP-hartes Problem ist,
 werden in der Regel heuristische Methoden zur Berechnung der Kanten verwendet.
 Eine bekannte und weitl\"aufig genutzte ist die $inverse\_capacity$-Methode.
 \subsubsection{Waypoint-Optimization}
-Wie in dem dieser Arbeits zur grundeliegenden Paper\cite{foerster2021} beschrieben,
+Wie in dem dieser Arbeit zur grundeliegenden Paper\cite{foerster2021} beschrieben,
 reicht es in der Regel nicht aus, einfach nur die Kantengewichte einzustellen, um den anfallenden Datenstau zu verhindern.
 Hierf\"ur bietet sich das Setzen von Wegpunkten (englisch: \emph{waypoints}) an, 
 da hier der gesamte Datenfluss innerhalb der Topologie ganzheitlich betrachtet wird 
@@ -230,7 +230,7 @@ Und somit l\"asst sich die Frage der Rechtfertigung auslagern.
 In allen F\"allen, in denen der \emph{greedy waypoints}-Algorithmus gerechtfertigt ist,
 ist auch die oben genannte Kombination gerechtfertigt.\newline
 Da es aus Zeitgr\"unden sowie mangelnder Rechenressourcen nicht so einfach m\"oglich war,
-diese Algorithmen auf sehr gro\ss en Tologien zu testen,
+diese Algorithmen auf sehr gro\ss en Topologien zu testen,
 kann nicht mit Sicherheit gesagt, wie hoch die Berechnungszeit in Topologien mit 50 oder mehr Knoten wirklich ist.
 Daher ist es schwer, diese Algorithmen (mit Ausnahme von \emph{inverse capacity} in solchen Topologien dynamisch zu verwenden.
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -293,7 +293,7 @@ Die eigenvector-centrality wurde gew\"ahlt, da eine hohe eigenvector-centrality 
 
 In der tats\"achlichen Implementierung wurden die centrality Berechnungen von NetworkKit benutzt, und dort zus\"atzlich noch normalisiert.
 
-Um \emph{inverse capacity} mit den centrality Werten zu verrechnen wird folgende Formel genutzt (f\"ur die Kante von i nach j:
+Um \emph{inverse capacity} mit den centrality Werten zu verrechnen, wird folgende Formel genutzt (f\"ur die Kante von i nach j:
 \begin{align*}
 &new\_weight_{ij} =\\
 &inverse capacity\_weight * \frac{CentralityNode_i + CentralityNode_j}{2}
@@ -314,7 +314,7 @@ Diese d\"urften schlecht abschneiden, sind hier jedoch mit dabei, um den Untersc
 \end{figure}
 
 
-Wie man in Abbildung \ref{fig:kai_p1_results} zu sehen ist, ist der neue Algorithmus keine Verbesserung auf den getesteten Topologien.
+Wie in der Abbildung \ref{fig:kai_p1_results} zu sehen ist, ist der neue Algorithmus keine Verbesserung auf den getesteten Topologien.
 Am schlechtesten schneidet hier der Algorithmus mit der betweeness centrality ab, dicht gefolgt von der eigenvector centrality.
 Die closeness centrality schneidet mit am besten ab und ist im Beispiel f\"ur "Abilene" gleich auf mit \emph{inverse capacity}.
 Die Algorithmen ohne \emph{inverse capacity} sind, schlechter, jedoch (abgesehen von Abilene) nah an den anderen Algorithmen dran.
@@ -436,7 +436,7 @@ Warum diese Topologie genutzt wurde, wird klar wenn man sich die Ergebnisse ansc
 Wie man in Abbildung \ref{fig:kai_p2_results} sehen kann, performt auf dieser Topologie der Algorithmus besser als \emph{inverse capacity}.
 Der Grund daf\"ur wird in Abbildung \ref{fig:kai_p2_AdTopo} verdeutlicht.
 \emph{inverse capacity} schickt beide Demands \"uber die Kante zwischen 3 und 4, dadurch wird diese \"uberlastet.
-\emph{inverse capacity} mit der closeness Metrik schick ein Demand von 3 nach 4 und den anderen \"uber 0 nach 2 nach 4 und verhindert dadurch die \"uberlastung.
+\emph{inverse capacity} mit der closeness Metrik schickt ein Demand von 3 nach 4 und den anderen \"uber 0 nach 2 nach 4 und verhindert dadurch die \"uberlastung.
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{figures/kai_p2_TopoAd.png}
